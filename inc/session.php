@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 session_start();
 
 preg_match("/^\/([a-z]+)\//i", $_SERVER['PHP_SELF'], $folder);
