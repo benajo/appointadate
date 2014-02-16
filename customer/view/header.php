@@ -10,6 +10,7 @@
 
 	<link type="text/css" rel="stylesheet" href="../style/normalize.css">
 	<link type="text/css" rel="stylesheet" href="../style/jquery-ui.min.css">
+	<link type="text/css" rel="stylesheet" href="../style/default.css">
 	<link type="text/css" rel="stylesheet" href="./style/customer.css">
 </head>
 <body>
@@ -18,7 +19,7 @@
 		<h1>AppointADate - Customer Section</h1>
 
 		<?php
-		$sql = "SELECT * FROM customer
+		$sql = "SELECT first_name, last_name FROM customer
 				WHERE customer_id = {$_SESSION['customer_id']}";
 		$result = $mysqli->query($sql);
 		$row = $result->fetch_assoc();
@@ -30,7 +31,7 @@
 		<ul>
 			<li><a href="appointments.php">Appointments</a></li>
 			<li><a href="create_appointment.php">Create Appointment</a></li>
-			<li><a href="#">Favourite Businesses Noticeboard</a></li>
+			<li><a href="favourite_businesses.php">Favourite Businesses Noticeboard</a></li>
 			<li><a href="#">Ratings and Reviews</a></li>
 			<li><a href="edit_details.php">Edit details</a></li>
 		</ul>

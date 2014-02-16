@@ -56,6 +56,7 @@
 				<label for="formStaff">Staff</label>
 				<select name="staff" id="formStaff">
 					<option value="">Please select...</option>
+					<option value="">Anyone</option>
 					<?php
 					$sql = "SELECT * FROM staff
 							WHERE business_id = {$mysqli->real_escape_string($_GET['business'])}

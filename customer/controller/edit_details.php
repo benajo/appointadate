@@ -13,12 +13,14 @@ if (isset($_POST['edit_details'])) {
 	$errorMessage .= form_validate($_POST['postcode'], "req", "Postcode");
 	$errorMessage .= $_POST['password1'] || $_POST['password2'] ? password_validate($_POST['password1'], $_POST['password2']) : "";
 
+	$hash = password_hash($_POST['password1'], PASSWORD_DEFAULT);
+
+	$errorMessage .= !password_verify($_POST['password1'], $hash) ? "Password hashing error, please try again.<br>" : "";
+
 	if (empty($errorMessage)) {
 		$post = escape_post_data($_POST);
 
-		$password = md5($post['password1']);
-
-		$passUpdate = $post['password1'] ? "password = '{$password}'," : "";
+		$passUpdate = $post['password1'] ? "password = '{$hash}'," : "";
 
 		$sql = "UPDATE customer SET
 				first_name     = '{$post['first_name']}',
@@ -40,7 +42,7 @@ if (isset($_POST['edit_details'])) {
 			$message = "Your details have been updated.";
 		}
 		else {
-			$errorMessage = "There was an error updating your details, please try again.";
+			$errorMessage = "There has been an unexpected error, please try again.";
 		}
 	}
 }

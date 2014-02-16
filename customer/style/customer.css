@@ -30,16 +30,3 @@ div#page-footer {
 	border-top: 1px solid #000;
 	text-align: center;
 }
-
-/* customer-appointments */
-div#customer-appointments table th {
-	text-align: left;
-}
-div#customer-appointments table {
-	width: 100%;
-}
-
-/* customer-create-appointment */
-div#customer-create-appointment table {
-	width: 100%;
-}

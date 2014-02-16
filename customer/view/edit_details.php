@@ -1,6 +1,13 @@
 <div id="customer-edit-details">
 	<h1>Edit Details</h1>
 
+	<?php
+	$sql = "SELECT * FROM customer
+			WHERE customer_id = {$_SESSION['customer_id']}";
+	$result = $mysqli->query($sql);
+	$row = $result->fetch_assoc();
+	?>
+
 	<form action="edit_details.php" method="post">
 		<p>
 			<label for="formFirstName">First Name</label>

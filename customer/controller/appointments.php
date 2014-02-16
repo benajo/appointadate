@@ -8,7 +8,7 @@ if (isset($_GET['delete_appointment'])) {
 	// 	$message = "The appointment has been deleted successfully.";
 	// }
 	// else {
-	// 	$errorMessage = "The appointment failed to delete, please try again.";
+	// 	$errorMessage = "There has been an unexpected error, please try again.";
 	// }
 }
 ?>
