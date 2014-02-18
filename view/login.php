@@ -10,6 +10,8 @@
 			<label for="customerPassword">Password</label>
 			<input type="password" name="customerPassword" id="customerPassword" value="">
 		</p>
+
+		<p><input type="submit" name="customer_login" value="Login"></p>
 	</form>
 
 	<h1>Staff Login</h1>
@@ -23,5 +25,7 @@
 			<label for="staffPassword">Password</label>
 			<input type="password" name="staffPassword" id="staffPassword" value="">
 		</p>
+
+		<p><input type="submit" name="business_login" value="Login"></p>
 	</form>
 </div>
