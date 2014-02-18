@@ -1,0 +1,5 @@
+<div id="front-index">
+	<h1>Welcome</h1>
+
+	<p>Lorem ipsum Ea labore sunt proident et reprehenderit eiusmod ea eiusmod. Lorem ipsum Aliquip commodo ad dolor minim aliqua dolor laboris Duis nisi exercitation dolore irure dolor Excepteur Duis incididunt cillum incididunt pariatur in quis dolore laborum nostrud cillum fugiat eiusmod pariatur pariatur ad pariatur aliquip elit exercitation Duis in adipisicing exercitation aute irure ex reprehenderit dolor Duis eiusmod enim nisi Duis culpa consectetur fugiat irure proident incididunt commodo in do proident ullamco fugiat deserunt velit laboris qui mollit amet laborum in magna pariatur nulla laborum pariatur ullamco nulla elit Excepteur ex in quis qui amet velit officia adipisicing incididunt occaecat ut culpa elit dolore in in Duis ut sint veniam exercitation aute do ex non ut sit sit adipisicing et nulla irure incididunt Excepteur pariatur eu ex quis enim ex Excepteur ex exercitation dolore enim fugiat ut ex Ut labore ullamco elit voluptate officia deserunt labore in aute aute minim amet sit laborum ea laborum exercitation aliqua.</p>
+</div>

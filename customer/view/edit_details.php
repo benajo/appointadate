@@ -19,7 +19,7 @@
 		</p>
 		<p>
 			<label for="formEmail">Email</label>
-			<input type="text" name="email" id="formEmail" value="<?php echo isset($_POST['email']) ? $_POST['email'] : $row['email']; ?>">
+			<input type="email" name="email" id="formEmail" value="<?php echo isset($_POST['email']) ? $_POST['email'] : $row['email']; ?>">
 		</p>
 		<p>
 			<label for="formPhone">Phone</label>

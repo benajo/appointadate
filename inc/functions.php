@@ -3,7 +3,7 @@
  * @author Ben Jovanic
  * @date 2014-02-15
  */
-function form_validate($data, $type, $name)
+function validate_form($data, $type, $name)
 {
 	$invalid = "Invalid characters in {$name}.<br>";
 
@@ -70,7 +70,7 @@ function form_validate($data, $type, $name)
  * @author Ben Jovanic
  * @date 2014-02-15
  */
-function password_validate($p1, $p2)
+function validate_password($p1, $p2)
 {
 	if (empty($p1) || empty($p2)) {
 		return "Complete both password fields.<br>";
@@ -104,4 +104,20 @@ function escape_post_data($p)
 	}
 
 	return $escaped;
+}
+
+/**
+ * @author Ben Jovanic
+ * @date 2014-02-16
+ */
+function validate_customer_email($email, $customer_id=null)
+{
+	global $mysqli;
+
+	$sql = "SELECT * FROM customer
+			WHERE email = '{$mysqli->real_escape_string($email)}'
+			".(!is_null($customer_id) ? "AND customer_id != {$customer_id}" : "");
+	$result = $mysqli->query($sql);
+
+	return $result->num_rows ? "Email address is already in use.<br>" : "";
 }

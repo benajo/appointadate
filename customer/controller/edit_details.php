@@ -1,17 +1,18 @@
 <?php
 if (isset($_POST['edit_details'])) {
-	$errorMessage  = form_validate($_POST['first_name'], "req", "First Name");
-	$errorMessage .= form_validate($_POST['first_name'], "name", "First Name");
-	$errorMessage .= form_validate($_POST['last_name'], "req", "Last Name");
-	$errorMessage .= form_validate($_POST['last_name'], "name", "Last Name");
-	$errorMessage .= form_validate($_POST['email'], "req", "Email");
-	$errorMessage .= form_validate($_POST['phone'], "req", "Phone");
-	$errorMessage .= form_validate($_POST['phone'], "num_s", "Phone");
-	$errorMessage .= form_validate($_POST['address_line_1'], "req", "Address Line 1");
-	$errorMessage .= form_validate($_POST['city'], "req", "City");
-	$errorMessage .= form_validate($_POST['county'], "req", "County");
-	$errorMessage .= form_validate($_POST['postcode'], "req", "Postcode");
-	$errorMessage .= $_POST['password1'] || $_POST['password2'] ? password_validate($_POST['password1'], $_POST['password2']) : "";
+	$errorMessage  = validate_form($_POST['first_name'], "req", "First Name");
+	$errorMessage .= validate_form($_POST['first_name'], "name", "First Name");
+	$errorMessage .= validate_form($_POST['last_name'], "req", "Last Name");
+	$errorMessage .= validate_form($_POST['last_name'], "name", "Last Name");
+	$errorMessage .= validate_form($_POST['email'], "req", "Email");
+	$errorMessage .= validate_customer_email($_POST['email'], $_SESSION['customer_id']);
+	$errorMessage .= validate_form($_POST['phone'], "req", "Phone");
+	$errorMessage .= validate_form($_POST['phone'], "num_s", "Phone");
+	$errorMessage .= validate_form($_POST['address_line_1'], "req", "Address Line 1");
+	$errorMessage .= validate_form($_POST['city'], "req", "City");
+	$errorMessage .= validate_form($_POST['county'], "req", "County");
+	$errorMessage .= validate_form($_POST['postcode'], "req", "Postcode");
+	$errorMessage .= $_POST['password1'] || $_POST['password2'] ? validate_password($_POST['password1'], $_POST['password2']) : "";
 
 	$hash = password_hash($_POST['password1'], PASSWORD_DEFAULT);
 

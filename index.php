@@ -1,10 +1,19 @@
 <?php
+// page settings
 require "./inc/session.php";
-require "./inc/settings.php";
+require "./inc/db.php";
 require "./inc/global_vars.php";
 require "./inc/functions.php";
+
+// page controllers
+// include "./controller/index.php";
+
+// page header
+include "./view/header.php";
+
+// page views
+include "./view/index.php";
+
+// page footer
+include "./view/footer.php";
 ?>
-<ul>
-	<li><a href="customer/index.php">Customer section</a></li>
-	<li><a href="business/index.php">Business section</a></li>
-</ul>

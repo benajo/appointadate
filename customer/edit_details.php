@@ -1,7 +1,7 @@
 <?php
 // page settings
 require "../inc/session.php";
-require "../inc/settings.php";
+require "../inc/db.php";
 require "../inc/global_vars.php";
 require "../inc/functions.php";
 require "../inc/password.php";

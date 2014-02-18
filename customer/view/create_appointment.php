@@ -30,27 +30,14 @@
 				</tbody>
 			</table>
 
-			<p><input type="submit" name="create_appointment" value="Submit"> <a href="create_appointment.php?business=<?php echo $_GET['business']; ?>&amp;staff=<?php echo $_GET['staff']; ?>">Back</a></p>
+			<p><input type="submit" name="create_appointment" value="Submit"> <a href="create_appointment.php?business=<?php echo $_GET['business']; ?>&amp;date=<?php echo $_GET['date']; ?>">Back</a></p>
 		</form>
-	<?php } elseif (isset($_GET['business']) && !empty($_GET['business']) && isset($_GET['staff']) && !empty($_GET['staff'])) { ?>
-		<h1>Create Appointment - Select a Date</h1>
-
-		<form action="create_appointment.php" method="get">
-			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">
-			<input type="hidden" name="staff" value="<?php echo $_GET['staff']; ?>">
-
-			<p>
-				<label for="date">Day</label>
-				<input type="text" name="date" id="date" class="datepicker">
-			</p>
-
-			<p><input type="submit" value="Submit"> <a href="create_appointment.php?business=<?php echo $_GET['business']; ?>">Back</a></p>
-		</form>
-	<?php } elseif (isset($_GET['business']) && !empty($_GET['business'])) { ?>
+	<?php } elseif (isset($_GET['business']) && !empty($_GET['business']) && isset($_GET['date']) && !empty($_GET['date'])) { ?>
 		<h1>Create Appointment - Select Staff</h1>
 
 		<form action="create_appointment.php" method="get">
 			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">
+			<input type="hidden" name="date" value="<?php echo $_GET['date']; ?>">
 
 			<p>
 				<label for="formStaff">Staff</label>
@@ -69,6 +56,19 @@
 						<?php } ?>
 					<?php } ?>
 				</select>
+			</p>
+
+			<p><input type="submit" value="Submit"> <a href="create_appointment.php?business=<?php echo $_GET['business']; ?>">Back</a></p>
+		</form>
+	<?php } elseif (isset($_GET['business']) && !empty($_GET['business'])) { ?>
+		<h1>Create Appointment - Select a Date</h1>
+
+		<form action="create_appointment.php" method="get">
+			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">
+
+			<p>
+				<label for="date">Day</label>
+				<input type="text" name="date" id="date" class="datepicker">
 			</p>
 
 			<p><input type="submit" value="Submit"> <a href="create_appointment.php">Back</a></p>
