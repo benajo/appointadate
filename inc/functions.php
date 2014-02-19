@@ -15,7 +15,7 @@ function validate_form($data, $type, $name)
 	else {
 		switch ($type) {
 			case "email":
-				if (!preg_match("/^([a-z\'\-]+)$/i", $data)) {
+				if (!preg_match("/@/i", $data)) {
 					return $invalid;
 				}
 				break;
@@ -79,7 +79,7 @@ function validate_password($p1, $p2)
 	$error = "";
 
 	if ($p1 != $p2) {
-		$error .= "Passwords do not mm,match.<br>";
+		$error .= "Passwords do not match.<br>";
 	}
 
 	if (strlen($p1) < 8) {

@@ -1,10 +1,10 @@
 <?php
 // page settings
-require "../inc/session.php";
-require "../inc/db.php";
-require "../inc/global_vars.php";
-require "../inc/functions.php";
-require "../inc/password.php";
+require "./inc/session.php";
+require "./inc/db.php";
+require "./inc/global_vars.php";
+require "./inc/functions.php";
+require "./inc/password.php";
 
 // page controllers
 include "./controller/edit_details.php";

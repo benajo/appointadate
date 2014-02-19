@@ -1,18 +1,19 @@
 <?php
-if (isset($_POST['edit_details'])) {
+if (isset($_POST['customer_join'])) {
+	$_POST['email']="Benasd";
 	$errorMessage  = validate_form($_POST['first_name'], "req", "First Name");
 	$errorMessage .= validate_form($_POST['first_name'], "name", "First Name");
 	$errorMessage .= validate_form($_POST['last_name'], "req", "Last Name");
 	$errorMessage .= validate_form($_POST['last_name'], "name", "Last Name");
 	$errorMessage .= validate_form($_POST['email'], "req", "Email");
-	$errorMessage .= validate_customer_email($_POST['email'], $_SESSION['customer_id']);
+	$errorMessage .= !empty($_POST['email']) ? validate_customer_email($_POST['email']) : "";
 	$errorMessage .= validate_form($_POST['phone'], "req", "Phone");
 	$errorMessage .= validate_form($_POST['phone'], "num_s", "Phone");
 	$errorMessage .= validate_form($_POST['address_line_1'], "req", "Address Line 1");
 	$errorMessage .= validate_form($_POST['city'], "req", "City");
 	$errorMessage .= validate_form($_POST['county'], "req", "County");
 	$errorMessage .= validate_form($_POST['postcode'], "req", "Postcode");
-	$errorMessage .= $_POST['password1'] || $_POST['password2'] ? validate_password($_POST['password1'], $_POST['password2']) : "";
+	$errorMessage .= validate_password($_POST['password1'], $_POST['password2']);
 
 	$hash = password_hash($_POST['password1'], PASSWORD_DEFAULT);
 
@@ -21,26 +22,28 @@ if (isset($_POST['edit_details'])) {
 	if (empty($errorMessage)) {
 		$post = escape_post_data($_POST);
 
-		$passUpdate = $post['password1'] ? "password = '{$hash}'," : "";
-
-		$sql = "UPDATE customer SET
+		$sql = "INSERT INTO customer SET
 				first_name     = '{$post['first_name']}',
 				last_name      = '{$post['last_name']}',
 				phone          = '{$post['phone']}',
 				email          = '{$post['email']}',
-				{$passUpdate}
+				password       = '{$hash}',
 				pass_hint      = '{$post['pass_hint']}',
 				address_line_1 = '{$post['address_line_1']}',
 				address_line_2 = '{$post['address_line_2']}',
 				city           = '{$post['city']}',
 				county         = '{$post['county']}',
 				postcode       = '{$post['postcode']}',
-				updated        = NOW()
-				WHERE customer_id = {$_SESSION['customer_id']}";
+				created        = NOW(),
+				updated        = NOW()";
 		$result = $mysqli->query($sql);
 
 		if ($result) {
-			$message = "Your details have been updated.";
+			$_SESSION['customer_logged_in'] = true;
+			$_SESSION['customer_id'] = $mysqli->insert_id;
+
+			header("Location: ./appointments.php");
+			exit;
 		}
 		else {
 			$errorMessage = "There has been an unexpected error, please try again.";

@@ -11,13 +11,12 @@ div#page-header {
 /* PAGE NAV */
 div#page-nav {
 	margin: 10px 0;
-	padding: 5px;
 	border: 1px solid;
 	border-radius: 5px;
 	overflow: hidden;
 }
 div#page-nav ul {
-	margin: 0;
+	margin: 5px;
 	padding: 0;
 	list-style: none;
 }
@@ -25,6 +24,13 @@ div#page-nav li {
 	margin: 0 20px 0 0;
 	display: block;
 	float: left;
+}
+
+/* PAGE MESSAGE */
+div#page-message {
+}
+div#page-message span.error {
+	color: #F00;
 }
 
 /* PAGE FOOTER */

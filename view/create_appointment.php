@@ -85,7 +85,7 @@
 					$sql = "SELECT * FROM business ORDER BY name";
 					$result = $mysqli->query($sql);
 					?>
-					<?php if ($result->num_rows) { ?>
+					<?php if ($result && $result->num_rows > 0) { ?>
 						<?php while ($row = $result->fetch_assoc()) { ?>
 							<option value="<?php echo $row['business_id']; ?>"><?php echo $row['name']; ?></option>
 						<?php } ?>
