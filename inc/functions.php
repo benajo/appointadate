@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Ben Jovanic
- * @date 2014-02-15
+ * @version 2014-02-22
  */
 function validate_form($data, $type, $name)
 {
@@ -15,7 +15,7 @@ function validate_form($data, $type, $name)
 	else {
 		switch ($type) {
 			case "email":
-				if (!preg_match("/@/i", $data)) {
+				if (!filter_var($data, FILTER_VALIDATE_EMAIL)) {
 					return $invalid;
 				}
 				break;
@@ -61,14 +61,13 @@ function validate_form($data, $type, $name)
 					return $invalid;
 				}
 				break;
-
 		}
 	}
 }
 
 /**
  * @author Ben Jovanic
- * @date 2014-02-15
+ * @version 2014-02-15
  */
 function validate_password($p1, $p2)
 {
@@ -91,7 +90,7 @@ function validate_password($p1, $p2)
 
 /**
  * @author Ben Jovanic
- * @date 2014-02-15
+ * @version 2014-02-15
  */
 function escape_post_data($p)
 {
@@ -108,11 +107,15 @@ function escape_post_data($p)
 
 /**
  * @author Ben Jovanic
- * @date 2014-02-16
+ * @version 2014-02-22
  */
 function validate_customer_email($email, $customer_id=null)
 {
 	global $mysqli;
+
+	if (!$email) {
+		return;
+	}
 
 	$sql = "SELECT * FROM customer
 			WHERE email = '{$mysqli->real_escape_string($email)}'
@@ -120,4 +123,47 @@ function validate_customer_email($email, $customer_id=null)
 	$result = $mysqli->query($sql);
 
 	return $result->num_rows ? "Email address is already in use.<br>" : "";
+}
+
+/**
+ * @author Ben Jovanic
+ * @version 2014-02-22
+ */
+function validate_staff_email($email, $staff_id=null)
+{
+	global $mysqli;
+
+	if (!$email) {
+		return;
+	}
+
+	$sql = "SELECT * FROM staff
+			WHERE email = '{$mysqli->real_escape_string($email)}'
+			".(!is_null($staff_id) ? "AND staff_id != {$staff_id}" : "");
+	$result = $mysqli->query($sql);
+
+	return $result->num_rows ? "Email address is already in use.<br>" : "";
+}
+
+/**
+ * @author Ben Jovanic
+ * @version 2014-02-22
+ */
+function random_code($length)
+{
+	$code = "";
+
+	$chars = array(
+		"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+		"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+		"0","1","2","3","4","5","6","7","8","9"
+	);
+
+	$charsLength = count($chars) - 1;
+
+	for ($i=0; $i < $length; $i++) {
+		$code .= $chars[rand(1, $charsLength)];
+	}
+
+	return $code;
 }

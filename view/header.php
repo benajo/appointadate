@@ -18,7 +18,7 @@
 	<div id="page-header">
 		<h1>AppointADate</h1>
 		<a href="customer/index.php">Customer section</a> |
-		<a href="business/index.php">Business section</a>
+		<a href="staff/index.php">Staff section</a>
 	</div>
 	<div id="page-nav">
 		<ul>
@@ -48,7 +48,7 @@
 				$row = $result->fetch_assoc();
 				?>
 
-				<li>Logged in as <?php echo $row['first_name']." ".$row['last_name']; ?> (<a href="?logout">logout</a>)</li>
+				<li>Logged in as <?php echo $row['first_name']." ".$row['last_name']; ?> (<a href="logout.php">logout</a>)</li>
 			</ul>
 		<?php } ?>
 	</div>
