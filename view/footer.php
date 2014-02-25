@@ -1,5 +1,9 @@
 	</div> <!-- end #page-content -->
 	<div id="page-footer">
+		<a href="customer/index.php">Customer section</a> |
+		<!-- <a href="staff/index.php">Staff section</a> -->
+		<a href="login.php">Login</a>
+		<br>
 		Copyright &copy; AppointADate 2014
 	</div>
 </div> <!-- end #page-container -->

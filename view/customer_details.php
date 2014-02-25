@@ -1,5 +1,5 @@
 <?php
-$join = isset($_SESSION['customer_logged_in']) ? false : true; // determines whether to display the join page of edit details
+$join = preg_match("/(join)/i", $_SERVER['PHP_SELF']) ? true : false; // determines whether to display the join page or edit details
 
 if (!$join) {
 	$sql = "SELECT * FROM customer
@@ -50,11 +50,11 @@ if (!$join) {
 			<input type="text" name="postcode" id="formPostcode" value="<?php echo isset($_POST['postcode']) ? $_POST['postcode'] : (isset($row['postcode']) ? $row['postcode'] : ""); ?>">
 		</p>
 		<p>
-			<label for="formPassword1">New Password</label>
+			<label for="formPassword1"><?php echo !$join ? "New " : ""; ?>Password</label>
 			<input type="password" name="password1" id="formPassword1" value="">
 		</p>
 		<p>
-			<label for="formPassword2">Confirm New Password</label>
+			<label for="formPassword2">Confirm <?php echo !$join ? "New " : ""; ?>Password</label>
 			<input type="password" name="password2" id="formPassword2" value="">
 		</p>
 		<p>
