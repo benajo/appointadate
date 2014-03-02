@@ -167,3 +167,4 @@ function random_code($length)
 
 	return $code;
 }
+?>

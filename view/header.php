@@ -16,7 +16,7 @@
 <body>
 <div id="page-container">
 	<div id="page-header">
-		<div style="height: 78px; border: 1px solid #000; font-size: 38pt; float: left;">Appoint-A-Date</div>
+		<div style="height: 78px; font-size: 38pt; float: left;">Appoint-A-Date</div>
 
 		<div style="width: 500px; height: 50px; float:right;text-align: right">
 			<?php if (isset($_SESSION['customer_logged_in']) && $_SESSION['customer_logged_in'] == true) { ?>
@@ -28,20 +28,16 @@
 				?>
 				Logged in as <?php echo $row['first_name']." ".$row['last_name']; ?> (<a href="logout.php">logout</a>)<br>
 
-				<a href="appointments.php">Appointments</a> |
-				<a href="create_appointment.php">Create Appointment</a> |
-				<a href="favourite_businesses.php">Favourite Businesses Noticeboard</a> |
-				<a href="#">Ratings and Reviews</a> |
-				<a href="edit_details.php">Edit details</a>
-			<?php } else { ?>
-				<form action="reset_password.php" method="post">
+				<a href="appointments.php">My Account</a>
+			<?php } elseif ($_SERVER['PHP_SELF'] != "/login.php") { ?>
+				<form action="login.php" method="post">
 					<div>
 						<label for="formEmail">Email</label>
 						<input type="text" name="formEmail" id="formEmail" value="<?php echo isset($_POST['formEmail']) ? $_POST['formEmail'] : ""; ?>">
 					</div>
 					<div>
-						<label for="formEmail">Password</label>
-						<input type="text" name="formEmail" id="formEmail" value="<?php echo isset($_POST['formEmail']) ? $_POST['formEmail'] : ""; ?>">
+						<label for="formPassword">Password</label>
+						<input type="password" name="formPassword" id="formPassword" value="<?php echo isset($_POST['formPassword']) ? $_POST['formPassword'] : ""; ?>">
 					</div>
 					<div>
 						<input type="radio" name="formType" id="formTypeCustomer" value="customer" <?php echo isset($_POST['formType']) && $_POST['formType'] == "customer" ? "checked" : (!isset($_POST['formType']) ? "checked" : ""); ?>>
@@ -49,7 +45,7 @@
 						<input type="radio" name="formType" id="formTypeStaff" value="staff" <?php echo isset($_POST['formType']) && $_POST['formType'] == "staff" ? "checked" : ""; ?>>
 						<label for="formTypeStaff">Staff</label>
 
-						<input type="submit" name="reset_password" value="Login">
+						<input type="submit" name="login" value="Login">
 					</div>
 				</form>
 			<?php } ?>
@@ -58,12 +54,26 @@
 	<div id="page-nav">
 		<ul>
 			<li><a href="index.php">Home</a></li>
-			<li><a href="about.php">About</a></li>
-			<li><a href="contact.php">Contact</a></li>
-			<li><a href="businesses.php">Businesses</a></li>
-			<li><a href="customer_join.php">Customer Join</a></li>
-			<li><a href="business_join.php">Business Join</a></li>
-			<li class="search"><input type="text" name="search" value="Search businesses"></li>
+
+			<?php if (defined("SECURE_PAGE") && SECURE_PAGE == true) { ?>
+				<li><a href="appointments.php">Appointments</a></li>
+				<li><a href="create_appointment.php">Create Appointment</a></li>
+				<li><a href="favourite_businesses.php">Favourite Businesses</a></li>
+				<li><a href="#">Reviews</a></li>
+				<li><a href="edit_details.php">Edit details</a></li>
+			<?php } else { ?>
+				<li><a href="about.php">About</a></li>
+				<li><a href="contact.php">Contact</a></li>
+				<li><a href="businesses.php">Businesses</a></li>
+				<li><a href="customer_join.php">Customer Join</a></li>
+				<li><a href="business_join.php">Business Join</a></li>
+				<li class="search">
+					<form action="search.php" method="post">
+						<input type="text" name="search" value="Search businesses">
+						<input type="image" src="images/search-icon.png">
+					</form>
+				</li>
+			<?php } ?>
 		</ul>
 	</div>
 	<?php if (!empty($message) || !empty($errorMessage)) { ?>

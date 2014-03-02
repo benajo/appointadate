@@ -1,8 +1,9 @@
+/* body */
 body {
 	background: #eee;
 }
 
-/* PAGE CONTAINER */
+/* page-container */
 div#page-container{
 	background: #FFF;
 	width: 1000px;
@@ -12,13 +13,13 @@ div#page-container{
 	box-shadow: 0px 0px 10px 2px #AAA;
 }
 
-/* PAGE HEADER */
+/* page-header */
 div#page-header {
 	height: 80px;
 	margin: 0 0 20px;
 }
 
-/* PAGE NAV */
+/* page-navigation */
 div#page-nav {
 	overflow: hidden;
 	font-size: 1.2em;
@@ -35,10 +36,6 @@ div#page-nav li {
 	display: block;
 	float: left;
 }
-div#page-nav li.search {
-	margin: 0;
-	float: right;
-}
 div#page-nav a {
 	height: 30px;
 	display: block;
@@ -49,14 +46,26 @@ div#page-nav a:hover {
 	text-decoration: underline;
 }
 
-/* PAGE MESSAGE */
+div#page-nav li.search {
+	margin: 0;
+	float: right;
+	position: relative;
+}
+div#page-nav li.search input[type=image] {
+	width: 24px;
+	position: absolute;
+	right: 4px;
+	top: 4px;
+}
+
+/* page-message */
 div#page-message {
 }
 div#page-message span.error {
 	color: #F00;
 }
 
-/* PAGE FOOTER */
+/* page-footer */
 div#page-footer {
 	margin: 10px 0 0;
 	text-align: center;

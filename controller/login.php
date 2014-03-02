@@ -1,65 +1,49 @@
 <?php
 /**
-* @author Vlad Marchis
-* @date 2014-02-19
+* @author Vlad Marchis, Ben Jovanic
+* @version 2014-03-02
 */
-if (isset($_POST['customer_login'])) {
-	$errorMessage  = validate_form($_POST['customerEmail'], "req", "Email Address");
-	$errorMessage .= validate_form($_POST['customerEmail'], "email", "Email Address");
-	$errorMessage .= validate_form($_POST['customerPassword'], "req", "Password");
+if (isset($_POST['login'])) {
+	$errorMessage  = validate_form($_POST['formEmail'], "req", "Email");
+	$errorMessage .= validate_form($_POST['formEmail'], "email", "Email");
+	$errorMessage .= validate_form($_POST['formPassword'], "req", "Password");
 
 	if (empty($errorMessage)) {
 		$post = escape_post_data($_POST);
 
-		$sql = "SELECT customer_id, password FROM customer
-				WHERE email = '{$post['customerEmail']}'";
+		$customer = $_POST['formType'] == "customer" ? true : false; // determines if a customer or staff is loggin in
+
+		if ($customer) { // if it's a customer logging in
+			$sql = "SELECT customer_id, password FROM customer
+					WHERE email = '{$post['formEmail']}'";
+		}
+		else { // if it's a staff loggin in
+			$sql = "SELECT staff_id, password FROM staff
+					WHERE email = '{$post['formEmail']}'";
+		}
+
 		$result = $mysqli->query($sql);
 
 		if ($result && $result->num_rows > 0){
 			$row = $result->fetch_assoc();
+
 			$id = $row['customer_id'];
-			$pass = $row['password'];
 
-			if (password_verify($_POST['customerPassword'], $pass)) {
-				$_SESSION['customer_logged_in'] = true;
-				$_SESSION['customer_id'] = $id;
+			if (password_verify($_POST['formPassword'], $row['password'])) {
+				if ($customer) {
+					$_SESSION['customer_logged_in'] = true;
+					$_SESSION['customer_id'] = $row['customer_id'];
 
-				header("Location: ./appointments.php");
-				exit;
-			}
-			else {
-				$errorMessage = "Incorrect password.";
-			}
-		}
-		else {
-			$errorMessage = "Email address is not in our database.";
-		}
-	}
-}
+					header("Location: ./appointments.php");
+					exit;
+				}
+				else {
+					$_SESSION['staff_logged_in'] = true;
+					$_SESSION['staff_id'] = $row['staff_id'];
 
-if (isset($_POST['business_login'])) {
-	$errorMessage  = validate_form($_POST['staffEmail'], "req", "Email Address");
-	$errorMessage .= validate_form($_POST['staffEmail'], "email", "Email Address");
-	$errorMessage .= validate_form($_POST['staffPassword'], "req", "Password");
-
-	if (empty($errorMessage)) {
-		$post = escape_post_data($_POST);
-
-		$sql = "SELECT staff_id, password FROM staff
-				WHERE email = '{$post['staffEmail']}'";
-		$result = $mysqli->query($sql);
-
-		if ($result && $result->num_rows > 0){
-			$row = $result->fetch_assoc();
-			$id = $row['staff_id'];
-			$pass = $row['password'];
-
-			if (password_verify($_POST['staffPassword'], $pass)) {
-				$_SESSION['staff_logged_in'] = true;
-				$_SESSION['staff_id'] = $id;
-
-				header("Location: ");
-				exit;
+					header("Location: ");
+					exit;
+				}
 			}
 			else {
 				$errorMessage = "Incorrect password.";
