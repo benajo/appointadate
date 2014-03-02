@@ -7,13 +7,13 @@ require "./inc/global_vars.php";
 require "./inc/functions.php";
 
 // page controllers
-include "./controller/appointments.php";
+include "./controller/customer_create_appointment.php";
 
 // page header
 include "./view/header.php";
 
 // page views
-include "./view/appointments.php";
+include "./view/customer_create_appointment.php";
 
 // page footer
 include "./view/footer.php";

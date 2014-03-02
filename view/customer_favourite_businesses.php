@@ -16,7 +16,7 @@
 			<?php while ($row = $result->fetch_assoc()) { ?>
 				<tr>
 					<td><?php echo $row['name']; ?></td>
-					<td><a href="favourite_businesses.php?remove_favourite_business=<?php echo $row['business_id']; ?>" class="confirm-delete">remove</a></td>
+					<td><a href="customer_favourite_businesses.php?remove_favourite_business=<?php echo $row['business_id']; ?>" class="confirm-delete">remove</a></td>
 				</tr>
 			<?php } ?>
 		</table>

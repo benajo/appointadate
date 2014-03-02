@@ -12,7 +12,7 @@ if (!$join) {
 	<h1><?php echo $join ? "Customer Join" : "Edit Details"; ?></h1>
 
 
-	<form action="<?php echo $join ? "customer_join" : "edit_details"; ?>.php" method="post">
+	<form action="<?php echo $join ? "join_customer" : "customer_edit_details"; ?>.php" method="post">
 		<p>
 			<label for="formFirstName">First Name</label>
 			<input type="text" name="first_name" id="formFirstName" value="<?php echo isset($_POST['first_name']) ? $_POST['first_name'] : (isset($row['first_name']) ? $row['first_name'] : ""); ?>">
@@ -61,6 +61,6 @@ if (!$join) {
 			<label for="formPassHint">Password Hint</label>
 			<input type="text" name="pass_hint" id="formPassHint" value="<?php echo isset($_POST['pass_hint']) ? $_POST['pass_hint'] : (isset($row['pass_hint']) ? $row['pass_hint'] : ""); ?>">
 		</p>
-		<p><input type="submit" name="<?php echo $join ? "customer_join" : "edit_details"; ?>" value="Submit"></p>
+		<p><input type="submit" name="<?php echo $join ? "join_customer" : "edit_details"; ?>" value="Submit"></p>
 	</form>
 </div>

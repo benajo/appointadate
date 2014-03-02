@@ -47,7 +47,7 @@
 						<?php } ?>
 					</td>
 					<td><?php echo date("d M Y", strtotime($row['appointment_created'])); ?></td>
-					<td><a href="">edit</a> - <a href="appointments.php?delete_appointment=<?php echo $row['appointment_id']; ?>" class="confirm-delete">delete</a></td>
+					<td><a href="">edit</a> - <a href="customer_appointments.php?delete_appointment=<?php echo $row['appointment_id']; ?>" class="confirm-delete">delete</a></td>
 				</tr>
 			<?php } ?>
 		</table>

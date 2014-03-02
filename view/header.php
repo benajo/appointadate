@@ -28,22 +28,22 @@
 				?>
 				Logged in as <?php echo $row['first_name']." ".$row['last_name']; ?> (<a href="logout.php">logout</a>)<br>
 
-				<a href="appointments.php">My Account</a>
+				<a href="customer_appointments.php">My Account</a>
 			<?php } elseif ($_SERVER['PHP_SELF'] != "/login.php") { ?>
 				<form action="login.php" method="post">
 					<div>
-						<label for="formEmail">Email</label>
-						<input type="text" name="formEmail" id="formEmail" value="<?php echo isset($_POST['formEmail']) ? $_POST['formEmail'] : ""; ?>">
+						<label for="loginEmail">Email</label>
+						<input type="text" name="loginEmail" id="loginEmail" value="<?php echo isset($_POST['loginEmail']) ? $_POST['loginEmail'] : ""; ?>">
 					</div>
 					<div>
-						<label for="formPassword">Password</label>
-						<input type="password" name="formPassword" id="formPassword" value="<?php echo isset($_POST['formPassword']) ? $_POST['formPassword'] : ""; ?>">
+						<label for="loginPassword">Password</label>
+						<input type="password" name="loginPassword" id="loginPassword" value="<?php echo isset($_POST['loginPassword']) ? $_POST['loginPassword'] : ""; ?>">
 					</div>
 					<div>
-						<input type="radio" name="formType" id="formTypeCustomer" value="customer" <?php echo isset($_POST['formType']) && $_POST['formType'] == "customer" ? "checked" : (!isset($_POST['formType']) ? "checked" : ""); ?>>
-						<label for="formTypeCustomer">Customer</label>
-						<input type="radio" name="formType" id="formTypeStaff" value="staff" <?php echo isset($_POST['formType']) && $_POST['formType'] == "staff" ? "checked" : ""; ?>>
-						<label for="formTypeStaff">Staff</label>
+						<input type="radio" name="loginType" id="loginTypeCustomer" value="customer" <?php echo isset($_POST['loginType']) && $_POST['loginType'] == "customer" ? "checked" : (!isset($_POST['loginType']) ? "checked" : ""); ?>>
+						<label for="loginTypeCustomer">Customer</label>
+						<input type="radio" name="loginType" id="loginTypeStaff" value="staff" <?php echo isset($_POST['loginType']) && $_POST['loginType'] == "staff" ? "checked" : ""; ?>>
+						<label for="loginTypeStaff">Staff</label>
 
 						<input type="submit" name="login" value="Login">
 					</div>
@@ -56,21 +56,21 @@
 			<li><a href="index.php">Home</a></li>
 
 			<?php if (defined("SECURE_PAGE") && SECURE_PAGE == true) { ?>
-				<li><a href="appointments.php">Appointments</a></li>
-				<li><a href="create_appointment.php">Create Appointment</a></li>
-				<li><a href="favourite_businesses.php">Favourite Businesses</a></li>
+				<li><a href="customer_appointments.php">Appointments</a></li>
+				<li><a href="customer_create_appointment.php">Create Appointment</a></li>
+				<li><a href="customer_favourite_businesses.php">Favourite Businesses</a></li>
 				<li><a href="#">Reviews</a></li>
-				<li><a href="edit_details.php">Edit details</a></li>
+				<li><a href="customer_edit_details.php">Edit details</a></li>
 			<?php } else { ?>
 				<li><a href="about.php">About</a></li>
 				<li><a href="contact.php">Contact</a></li>
 				<li><a href="businesses.php">Businesses</a></li>
-				<li><a href="customer_join.php">Customer Join</a></li>
-				<li><a href="business_join.php">Business Join</a></li>
+				<li><a href="join_customer.php">Customer Join</a></li>
+				<li><a href="join_business.php">Business Join</a></li>
 				<li class="search">
 					<form action="search.php" method="post">
 						<input type="text" name="search" value="Search businesses">
-						<input type="image" src="images/search-icon.png">
+						<input type="image" src="images/search-icon.png" alt="Search">
 					</form>
 				</li>
 			<?php } ?>

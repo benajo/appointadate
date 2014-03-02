@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['customer_join']) || isset($_POST['edit_details'])) {
+if (isset($_POST['join_customer']) || isset($_POST['edit_details'])) {
 
 	$errorMessage  = validate_form($_POST['first_name'], "req", "First Name");
 	$errorMessage .= validate_form($_POST['first_name'], "name", "First Name");
@@ -7,7 +7,7 @@ if (isset($_POST['customer_join']) || isset($_POST['edit_details'])) {
 	$errorMessage .= validate_form($_POST['last_name'], "name", "Last Name");
 	$errorMessage .= validate_form($_POST['email'], "req", "Email");
 
-	if (isset($_POST['customer_join'])) {
+	if (isset($_POST['join_customer'])) {
 		$errorMessage .= validate_customer_email($_POST['email']);
 	}
 	else {
@@ -21,7 +21,7 @@ if (isset($_POST['customer_join']) || isset($_POST['edit_details'])) {
 	$errorMessage .= validate_form($_POST['county'], "req", "County");
 	$errorMessage .= validate_form($_POST['postcode'], "req", "Postcode");
 
-	if (isset($_POST['customer_join']) || !empty($_POST['password1']) || !empty($_POST['password2'])) {
+	if (isset($_POST['join_customer']) || !empty($_POST['password1']) || !empty($_POST['password2'])) {
 		$errorMessage .= validate_password($_POST['password1'], $_POST['password2']);
 
 		$hash = password_hash($_POST['password1'], PASSWORD_DEFAULT);
@@ -32,7 +32,7 @@ if (isset($_POST['customer_join']) || isset($_POST['edit_details'])) {
 	if (empty($errorMessage)) {
 		$post = escape_post_data($_POST);
 
-		if (isset($_POST['customer_join'])) {
+		if (isset($_POST['join_customer'])) {
 			$sql = "INSERT INTO customer SET
 					first_name     = '{$post['first_name']}',
 					last_name      = '{$post['last_name']}',
@@ -53,7 +53,7 @@ if (isset($_POST['customer_join']) || isset($_POST['edit_details'])) {
 				$_SESSION['customer_logged_in'] = true;
 				$_SESSION['customer_id'] = $mysqli->insert_id;
 
-				header("Location: ./appointments.php");
+				header("Location: ./customer_appointments.php");
 				exit;
 			}
 			else {

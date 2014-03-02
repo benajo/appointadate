@@ -2,7 +2,7 @@
 	<?php if (isset($_GET['business']) && !empty($_GET['business']) && isset($_GET['staff']) && !empty($_GET['staff']) && isset($_GET['date']) && !empty($_GET['date'])) { ?>
 		<h1>Create Appointment - Select a Tme</h1>
 
-		<form action="create_appointment.php" method="post">
+		<form action="customer_create_appointment.php" method="post">
 			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">
 			<input type="hidden" name="staff" value="<?php echo $_GET['staff']; ?>">
 			<input type="hidden" name="date" value="<?php echo $_GET['date']; ?>">
@@ -30,12 +30,12 @@
 				</tbody>
 			</table>
 
-			<p><input type="submit" name="create_appointment" value="Submit"> <a href="create_appointment.php?business=<?php echo $_GET['business']; ?>&amp;date=<?php echo $_GET['date']; ?>">Back</a></p>
+			<p><input type="submit" name="create_appointment" value="Submit"> <a href="customer_create_appointment.php?business=<?php echo $_GET['business']; ?>&amp;date=<?php echo $_GET['date']; ?>">Back</a></p>
 		</form>
 	<?php } elseif (isset($_GET['business']) && !empty($_GET['business']) && isset($_GET['date']) && !empty($_GET['date'])) { ?>
 		<h1>Create Appointment - Select Staff</h1>
 
-		<form action="create_appointment.php" method="get">
+		<form action="customer_create_appointment.php" method="get">
 			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">
 			<input type="hidden" name="date" value="<?php echo $_GET['date']; ?>">
 
@@ -58,12 +58,12 @@
 				</select>
 			</p>
 
-			<p><input type="submit" value="Submit"> <a href="create_appointment.php?business=<?php echo $_GET['business']; ?>">Back</a></p>
+			<p><input type="submit" value="Submit"> <a href="customer_create_appointment.php?business=<?php echo $_GET['business']; ?>">Back</a></p>
 		</form>
 	<?php } elseif (isset($_GET['business']) && !empty($_GET['business'])) { ?>
 		<h1>Create Appointment - Select a Date</h1>
 
-		<form action="create_appointment.php" method="get">
+		<form action="customer_create_appointment.php" method="get">
 			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">
 
 			<p>
@@ -71,12 +71,12 @@
 				<input type="text" name="date" id="date" class="datepicker">
 			</p>
 
-			<p><input type="submit" value="Submit"> <a href="create_appointment.php">Back</a></p>
+			<p><input type="submit" value="Submit"> <a href="customer_create_appointment.php">Back</a></p>
 		</form>
 	<?php } else { ?>
 		<h1>Create Appointment - Select Business</h1>
 
-		<form action="create_appointment.php" method="get">
+		<form action="customer_create_appointment.php" method="get">
 			<p>
 				<label for="formBusiness">Business</label>
 				<select name="business" id="formBusiness">

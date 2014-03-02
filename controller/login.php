@@ -4,22 +4,22 @@
 * @version 2014-03-02
 */
 if (isset($_POST['login'])) {
-	$errorMessage  = validate_form($_POST['formEmail'], "req", "Email");
-	$errorMessage .= validate_form($_POST['formEmail'], "email", "Email");
-	$errorMessage .= validate_form($_POST['formPassword'], "req", "Password");
+	$errorMessage  = validate_form($_POST['loginEmail'], "req", "Email");
+	$errorMessage .= validate_form($_POST['loginEmail'], "email", "Email");
+	$errorMessage .= validate_form($_POST['loginPassword'], "req", "Password");
 
 	if (empty($errorMessage)) {
 		$post = escape_post_data($_POST);
 
-		$customer = $_POST['formType'] == "customer" ? true : false; // determines if a customer or staff is loggin in
+		$customer = $_POST['loginType'] == "customer" ? true : false; // determines if a customer or staff is loggin in
 
 		if ($customer) { // if it's a customer logging in
 			$sql = "SELECT customer_id, password FROM customer
-					WHERE email = '{$post['formEmail']}'";
+					WHERE email = '{$post['loginEmail']}'";
 		}
 		else { // if it's a staff loggin in
 			$sql = "SELECT staff_id, password FROM staff
-					WHERE email = '{$post['formEmail']}'";
+					WHERE email = '{$post['loginEmail']}'";
 		}
 
 		$result = $mysqli->query($sql);
@@ -29,12 +29,12 @@ if (isset($_POST['login'])) {
 
 			$id = $row['customer_id'];
 
-			if (password_verify($_POST['formPassword'], $row['password'])) {
+			if (password_verify($_POST['loginPassword'], $row['password'])) {
 				if ($customer) {
 					$_SESSION['customer_logged_in'] = true;
 					$_SESSION['customer_id'] = $row['customer_id'];
 
-					header("Location: ./appointments.php");
+					header("Location: ./customer_appointments.php");
 					exit;
 				}
 				else {
