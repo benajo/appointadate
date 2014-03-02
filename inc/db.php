@@ -1,5 +1,5 @@
 <?php
-if (preg_match("/(herokuapp)/i", $_SERVER['HTTP_HOST']) {
+if (preg_match("/(herokuapp)/i", $_SERVER['HTTP_HOST'])) {
 	$mysqli = new mysqli('176.32.230.14', 'web14-appoint', 'nomorejsp', 'web14-appoint');
 }
 else {
