@@ -12,7 +12,7 @@ if (!$join) {
 	<h1><?php echo $join ? "Customer Join" : "Edit Details"; ?></h1>
 
 
-	<form action="<?php echo $join ? "join_customer" : "customer_edit_details"; ?>.php" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<p>
 			<label for="formFirstName">First Name</label>
 			<input type="text" name="first_name" id="formFirstName" value="<?php echo isset($_POST['first_name']) ? $_POST['first_name'] : (isset($row['first_name']) ? $row['first_name'] : ""); ?>">

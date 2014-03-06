@@ -1,6 +1,6 @@
 <div id="customer-create-appointment">
 	<?php if (isset($_GET['business']) && !empty($_GET['business']) && isset($_GET['staff']) && !empty($_GET['staff']) && isset($_GET['date']) && !empty($_GET['date'])) { ?>
-		<h1>Create Appointment - Select a Tme</h1>
+		<h1>Create Appointment - Select a Time</h1>
 
 		<form action="customer_create_appointment.php" method="post">
 			<input type="hidden" name="business" value="<?php echo $_GET['business']; ?>">

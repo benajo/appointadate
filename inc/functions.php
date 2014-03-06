@@ -167,4 +167,112 @@ function random_code($length)
 
 	return $code;
 }
+
+
+/**
+* @author Vlad-Tudor Marchis
+* @version 2014-03-03
+*/
+function search_business($name, $type, $location, $range)
+{
+	global $mysqli;
+
+	if (empty($name) && empty($type) && empty($location) && empty($range)) {
+		return "SELECT * FROM business
+				ORDER BY name";
+	}
+
+	$sql ="";
+	$where1 ="";
+	$where2 ="";
+	$having ="";
+	$order = "";
+
+	if (!empty($location) && !empty($range)) {
+		$location = urlencode($location);
+		$url = "http://maps.googleapis.com/maps/api/geocode/xml?address={$location}&sensor=false";
+		$xml = simplexml_load_string(file_get_contents($url));
+
+		$lat = $xml->result->geometry->location->lat;
+		$long = $xml->result->geometry->location->lng;
+
+		$sql = "SELECT *,
+				(( 6371 * acos( cos( radians({$lat}) ) * cos( radians( `latitude` ) ) * cos( radians( `longitude` ) - radians({$long}) ) + sin( radians({$lat}) ) * sin( radians( `latitude` ) ) ) ) * 0.621371192) AS distance ";
+
+		$having = " HAVING distance <= {$range}
+				   ORDER BY distance ASC";
+	}
+	else {
+		$sql = "SELECT * ";
+	}
+
+	if (!empty($type)) {
+		$sql .= " FROM business b
+				JOIN business_type bt ON b.business_id = bt.business_id ";
+	}
+	else {
+		$sql .= " FROM business ";
+	}
+
+	$and = false;
+
+	if (!empty($type))
+	{
+		$where1 =" WHERE ( bt.type_id = {$type} )";
+		$and = true;
+	}
+
+	if (!empty($name))
+	{
+		$keywords = explode(' ', trim($name));
+
+		if (empty($location) || empty($range)) {
+			$order = " ORDER BY ";
+		}
+		elseif (!empty($location) && !empty($range)) {
+			$order = " , ";
+		}
+
+		if ($and) {
+			$where2 .= " AND ( ";
+		}
+		else {
+			$where2 .= " WHERE ( ";
+		}
+
+		for ($i = 0; $i < count($keywords); $i++)
+		{
+			$key = $keywords[$i];
+			$where2 .= "name LIKE '%$key%'";
+
+			if ($i < 1){
+				$order .= " case when `name` like '%$key%' then 1 else 0 end ";
+			}
+			else {
+				$order .= " + case when `name` like '%$key%' then 1 else 0 end ";
+			}
+
+			if ($i < count($keywords) - 1) {
+				$where2 .= " OR ";
+			}
+			else {
+				$order .= " DESC ";
+			}
+		}
+
+		$where2 .=") ";
+		//$sql .= $where1;
+		//$and = true;
+		//echo $sql;
+		//$result = $mysqli->query($sql);
+	}
+
+	$sql .= $where1;
+	$sql .= $where2;
+	$sql .= $having;
+	$sql .= $order;
+
+	return $sql;
+
+}
 ?>

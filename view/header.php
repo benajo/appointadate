@@ -16,10 +16,11 @@
 <body>
 <div id="page-container">
 	<div id="page-header">
-		<div style="height: 78px; font-size: 38pt; float: left;">Appoint-A-Date</div>
+		<div style="height: 78px; font-size: 38pt; float: left;"><img src="images/appoint-a-date-logo.png" alt="Appoint-A-Date"></div>
 
 		<div style="width: 500px; height: 50px; float:right;text-align: right">
-			<?php if (isset($_SESSION['customer_logged_in']) && $_SESSION['customer_logged_in'] == true) { ?>
+			<?php if ($_SESSION['customer_logged_in']) { ?>
+
 				<?php
 				$sql = "SELECT first_name, last_name FROM customer
 						WHERE customer_id = {$_SESSION['customer_id']}";
@@ -29,7 +30,21 @@
 				Logged in as <?php echo $row['first_name']." ".$row['last_name']; ?> (<a href="logout.php">logout</a>)<br>
 
 				<a href="customer_appointments.php">My Account</a>
+
+			<?php } elseif ($_SESSION['staff_logged_in']) { ?>
+
+				<?php
+				$sql = "SELECT first_name, last_name FROM staff
+						WHERE staff_id = {$_SESSION['staff_id']}";
+				$result = $mysqli->query($sql);
+				$row = $result->fetch_assoc();
+				?>
+				Logged in as <?php echo $row['first_name']." ".$row['last_name']; ?> (<a href="logout.php">logout</a>)<br>
+
+				<a href="staff_timetable.php">My Account</a>
+
 			<?php } elseif ($_SERVER['PHP_SELF'] != "/login.php") { ?>
+
 				<form action="login.php" method="post">
 					<div>
 						<label for="loginEmail">Email</label>
@@ -48,6 +63,7 @@
 						<input type="submit" name="login" value="Login">
 					</div>
 				</form>
+
 			<?php } ?>
 		</div>
 	</div>
@@ -55,24 +71,37 @@
 		<ul>
 			<li><a href="index.php">Home</a></li>
 
-			<?php if (defined("SECURE_PAGE") && SECURE_PAGE == true) { ?>
+			<?php if (defined("CUSTOMER_SECTION") && CUSTOMER_SECTION == true) { ?>
+
 				<li><a href="customer_appointments.php">Appointments</a></li>
 				<li><a href="customer_create_appointment.php">Create Appointment</a></li>
 				<li><a href="customer_favourite_businesses.php">Favourite Businesses</a></li>
 				<li><a href="#">Reviews</a></li>
 				<li><a href="customer_edit_details.php">Edit details</a></li>
+
+			<?php } elseif (defined("STAFF_SECTION") && STAFF_SECTION == true) { ?>
+
+				<li><a href="staff_timetable.php">Timetable</a></li>
+				<li><a href="staff_appointments.php">Appointments</a></li>
+				<li><a href="staff_create_appointment.php">Create Appointment</a></li>
+				<li><a href="staff_statistics.php">Statistics</a></li>
+				<li><a href="staff_list.php">Staff List</a></li>
+				<li><a href="staff_add_details.php">Add Staff</a></li>
+
 			<?php } else { ?>
+
 				<li><a href="about.php">About</a></li>
 				<li><a href="contact.php">Contact</a></li>
 				<li><a href="businesses.php">Businesses</a></li>
 				<li><a href="join_customer.php">Customer Join</a></li>
 				<li><a href="join_business.php">Business Join</a></li>
 				<li class="search">
-					<form action="search.php" method="post">
-						<input type="text" name="search" value="Search businesses">
+					<form action="businesses.php" method="post">
+						<input type="text" name="keywords" value="">
 						<input type="image" src="images/search-icon.png" alt="Search">
 					</form>
 				</li>
+
 			<?php } ?>
 		</ul>
 	</div>

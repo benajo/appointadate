@@ -3,18 +3,23 @@
 
 	<form action="login.php" method="post">
 		<p>
-			<label for="formEmail">Email</label>
-			<input type="text" name="formEmail" id="formEmail" value="<?php echo isset($_POST['formEmail']) ? $_POST['formEmail'] : ""; ?>">
+			<label for="loginEmail">Email</label>
+			<input type="text" name="loginEmail" id="loginEmail" value="<?php echo isset($_POST['loginEmail']) ? $_POST['loginEmail'] : ""; ?>">
 		</p>
 		<p>
-			<label for="formPassword">Password</label>
-			<input type="password" name="formPassword" id="formPassword" value="">
+			<label for="loginPassword">Password</label>
+			<input type="password" name="loginPassword" id="loginPassword" value="">
 		</p>
 		<p>
-			<input type="radio" name="formType" id="formTypeCustomer" value="customer" <?php echo isset($_POST['formType']) && $_POST['formType'] == "customer" ? "checked" : (!isset($_POST['formType']) ? "checked" : ""); ?>>
-			<label for="formTypeCustomer">Customer</label>
-			<input type="radio" name="formType" id="formTypeStaff" value="staff" <?php echo isset($_POST['formType']) && $_POST['formType'] == "staff" ? "checked" : ""; ?>>
-			<label for="formTypeStaff">Staff</label>
+			<input type="radio" name="loginType" id="loginTypeCustomer" value="customer"
+			<?php echo isset($_POST['loginType']) && $_POST['loginType'] == "customer" ? "checked" : (!isset($_POST['loginType']) ? "checked" : ""); ?>
+			>
+
+			<label for="loginTypeCustomer">Customer</label>
+			<input type="radio" name="loginType" id="loginTypeStaff" value="staff"
+			<?php echo isset($_POST['loginType']) && $_POST['loginType'] == "staff" ? "checked" : ""; ?>
+			>
+			<label for="loginTypeStaff">Staff</label>
 		</p>
 
 		<p><input type="submit" name="login" value="Submit"> <a href="reset_password.php">Forgot password?</a></p>

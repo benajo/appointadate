@@ -18,7 +18,7 @@ if (isset($_POST['login'])) {
 					WHERE email = '{$post['loginEmail']}'";
 		}
 		else { // if it's a staff loggin in
-			$sql = "SELECT staff_id, password FROM staff
+			$sql = "SELECT staff_id, business_id, password, admin FROM staff
 					WHERE email = '{$post['loginEmail']}'";
 		}
 
@@ -32,16 +32,18 @@ if (isset($_POST['login'])) {
 			if (password_verify($_POST['loginPassword'], $row['password'])) {
 				if ($customer) {
 					$_SESSION['customer_logged_in'] = true;
-					$_SESSION['customer_id'] = $row['customer_id'];
+					$_SESSION['customer_id']        = $row['customer_id'];
 
 					header("Location: ./customer_appointments.php");
 					exit;
 				}
 				else {
-					$_SESSION['staff_logged_in'] = true;
-					$_SESSION['staff_id'] = $row['staff_id'];
+					$_SESSION['staff_logged_in']   = true;
+					$_SESSION['staff_id']          = $row['staff_id'];
+					$_SESSION['staff_admin']       = $row['admin'];
+					$_SESSION['staff_business_id'] = $row['business_id'];
 
-					header("Location: ");
+					header("Location: ./staff_timetable.php");
 					exit;
 				}
 			}
