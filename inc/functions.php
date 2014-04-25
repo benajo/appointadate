@@ -92,14 +92,14 @@ function validate_password($p1, $p2)
  * @author Ben Jovanic
  * @version 2014-02-15
  */
-function escape_post_data($p)
+function escape_post_data()
 {
 	global $mysqli;
 
 	$escaped = array();
 
-	foreach ($p as $k => $v) {
-		$escaped[$k] = $mysqli->real_escape_string($v);
+	foreach ($_POST as $k => $v) {
+		$escaped[$k] = $mysqli->real_escape_string(trim($v));
 	}
 
 	return $escaped;
@@ -173,9 +173,14 @@ function random_code($length)
 * @author Vlad-Tudor Marchis
 * @version 2014-03-03
 */
-function search_business($name, $type, $location, $range)
+function search_businesses()
 {
 	global $mysqli;
+
+	$name     = isset($_POST['keywords']) && !empty($_POST['keywords']) ? $_POST['keywords'] : "";;
+	$type     = isset($_POST['businessType']) && !empty($_POST['businessType']) ? $_POST['business;Type'] : "";;
+	$location = isset($_POST['postcode']) && !empty($_POST['postcode']) ? $_POST['postcode'] : "";;
+	$range    = isset($_POST['range']) && !empty($_POST['range']) ? $_POST['range'] : "";
 
 	if (empty($name) && empty($type) && empty($location) && empty($range)) {
 		return "SELECT * FROM business
@@ -274,5 +279,34 @@ function search_business($name, $type, $location, $range)
 
 	return $sql;
 
+}
+
+/**
+* @author Ben Jovanic
+* @version 2014-03-0314-04-01
+*/
+function favourite_business($businessId)
+{
+	global $mysqli;
+
+	$html = "";
+
+	if (isset($_SESSION['customer_logged_in'])) {
+		$sql = "SELECT * FROM customer_pref_business
+				WHERE customer_id = '{$_SESSION['customer_id']}'
+				AND   business_id = '{$businessId}'";
+		$result = $mysqli->query($sql);
+
+		// if entry exists, they have already favourited the business, so allow them to remove the business
+		if ($result->num_rows) {
+			$html .= "<p><a href=\"businesses.php?remove_favourite_business={$businessId}\">Remove from favourites</a></p>";
+		}
+		// otherwise, allow them to add the business as a favourite
+		else {
+			$html .= "<p><a href=\"businesses.php?add_favourite_business={$businessId}\">Add to favourites</a></p>";
+		}
+	}
+
+	return $html;
 }
 ?>

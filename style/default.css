@@ -1,3 +1,23 @@
+/* clear */
+.clear-both {
+	clear: both;
+}
+.clear-left {
+	clear: left;
+}
+.clear-right {
+	clear: right;
+}
+
+/* anchors */
+a, a:visited {
+	text-decoration: none;
+	/*color: */
+}
+a:hover {
+	text-decoration: underline;
+}
+
 /* tables */
 table {
 	width: 100%;
@@ -12,4 +32,33 @@ input, textarea, select {
 	padding: 2px;
 	border: 1px solid #666;
 	border-radius: 3px;
+}
+
+input.full-width {
+	width: 994px;
+}
+textarea.full-width {
+	width: 994px;
+	height: 250px;
+}
+
+fieldset legend {
+	font-size: 1.2em;
+}
+
+label,
+span.label {
+	width: 150px;
+	display: block;
+	float: left;
+	line-height: 25px;
+}
+
+label.inline {
+	display: inline;
+	float: none;
+}
+
+input[type=submit] {
+	width: auto !important;
 }

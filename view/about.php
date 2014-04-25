@@ -1,5 +1,5 @@
 <div id="front-about">
-	<h1>About AppointADate</h1>
+	<h1>About Appoint-A-Date</h1>
 
 	<p>Appoint-a-Date is a web oriented scheduling system which allows users to organise appointments and provides a resource of structured information to effectively manage their business. Our system gives business owners the ability to purchase their own licensed product, from where they can then manage their staff and statistics. It offers an frontend platform for both administrative use and customer use. From their accounts, owners and staff can easily update their details. Customers have easy access to this as well as options to alter their availability and a range of other preferences. Additionally, stored information would be able to generate useful statistics based on client data.</p>
 

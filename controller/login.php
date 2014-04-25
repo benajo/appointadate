@@ -9,7 +9,7 @@ if (isset($_POST['login'])) {
 	$errorMessage .= validate_form($_POST['loginPassword'], "req", "Password");
 
 	if (empty($errorMessage)) {
-		$post = escape_post_data($_POST);
+		$post = escape_post_data();
 
 		$customer = $_POST['loginType'] == "customer" ? true : false; // determines if a customer or staff is loggin in
 
@@ -26,8 +26,6 @@ if (isset($_POST['login'])) {
 
 		if ($result && $result->num_rows > 0){
 			$row = $result->fetch_assoc();
-
-			$id = $row['customer_id'];
 
 			if (password_verify($_POST['loginPassword'], $row['password'])) {
 				if ($customer) {

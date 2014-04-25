@@ -7,7 +7,7 @@ require "./inc/global_vars.php";
 require "./inc/functions.php";
 
 // page controllers
-// include "./controller/staff_timetable.php";
+include "./controller/staff_timetable.php";
 
 // page header
 include "./view/header.php";

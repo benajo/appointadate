@@ -7,13 +7,15 @@
 				b.name AS business_name,
 				CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
 				a.datetime AS appointment_datetime,
-				a.length AS appointment_length,
+				at.name AS appointment_type,
+				at.length AS appointment_length,
 				a.accepted AS appointment_accepted,
 				a.cancelled AS appointment_cancelled,
 				a.created AS appointment_created
 			FROM appointment a
 			JOIN business b ON a.business_id = b.business_id
 			LEFT JOIN customer c ON a.customer_id = c.customer_id
+			JOIN appointment_type at ON a.appointment_type_id = at.appointment_type_id
 			WHERE a.staff_id = {$_SESSION['staff_id']}
 			ORDER BY a.datetime";
 	$result = $mysqli->query($sql);
@@ -25,6 +27,7 @@
 				<th>Customer</th>
 				<th>Date</th>
 				<th>Time</th>
+				<th>Type</th>
 				<th>Length</th>
 				<th>Status</th>
 				<th>Created</th>
@@ -35,7 +38,8 @@
 					<td><?php echo $row['business_name']; ?></td>
 					<td><?php echo strlen($row['customer_name']) > 0 ? $row['customer_name'] : "---"; ?></td>
 					<td><?php echo date("d M Y", strtotime($row['appointment_datetime'])); ?></td>
-					<td><?php echo date("H:i:s", strtotime($row['appointment_datetime'])); ?></td>
+					<td><?php echo date("H:i", strtotime($row['appointment_datetime'])); ?></td>
+					<td><?php echo $row['appointment_type']; ?></td>
 					<td><?php echo $row['appointment_length']; ?> minutes</td>
 					<td>
 						<?php if ($row['appointment_accepted'] == 1) { ?>

@@ -1,6 +1,6 @@
 	</div> <!-- end #page-content -->
 	<div id="page-footer">
-		Copyright &copy; AppointADate 2014
+		Copyright &copy; Appoint-A-Date 2014
 	</div>
 </div> <!-- end #page-container -->
 

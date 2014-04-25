@@ -4,6 +4,14 @@ $(function() {
 		changeYear: true,
 		dateFormat: "D, d M yy",
 		showOtherMonths: true,
+		selectOtherMonths: true
+	});
+
+	$(".datepicker-no-past").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: "D, d M yy",
+		showOtherMonths: true,
 		selectOtherMonths: true,
 		minDate: 0
 	});

@@ -30,7 +30,7 @@ if (isset($_POST['join_customer']) || isset($_POST['edit_details'])) {
 	}
 
 	if (empty($errorMessage)) {
-		$post = escape_post_data($_POST);
+		$post = escape_post_data();
 
 		if (isset($_POST['join_customer'])) {
 			$sql = "INSERT INTO customer SET

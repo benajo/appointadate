@@ -6,7 +6,7 @@ require "./inc/global_vars.php";
 require "./inc/functions.php";
 
 // page controllers
-// include "./controller/businesses.php";
+include "./controller/businesses.php";
 
 // page header
 include "./view/header.php";

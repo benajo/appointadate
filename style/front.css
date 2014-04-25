@@ -22,6 +22,24 @@ div#page-header input {
 	margin: 1px 0;
 }
 
+div#page-logo {
+	height: 78px;
+	float: left;
+	font-size: 38pt;
+}
+
+/* page-login */
+div#page-login {
+	width: 500px;
+	height: 50px;
+	float: right;
+	text-align: right;
+}
+div#page-login label {
+	display: inline;
+	float: none;
+}
+
 /* page-navigation */
 div#page-nav {
 	width: 1000px;
@@ -79,18 +97,35 @@ div#page-message {
 div#page-message span.error {
 	color: #F00;
 }
+div#page-message td:first-child,
+div#page-message img {
+	width: 64px;
+	padding: 0 10px 0 0;
+}
 
 /* page-content */
 div#page-content {
 	overflow: hidden;
 }
-div#page-content div.left-content {
+div#page-content div.left-content-big {
 	width: 680px;
 	float: left;
+	overflow: hidden;
 }
-div#page-content div.right-content {
+div#page-content div.left-content-half {
+	width: 490px;
+	float: left;
+	overflow: hidden;
+}
+div#page-content div.right-content-small {
 	width: 300px;
 	float: right;
+	overflow: hidden;
+}
+div#page-content div.right-content-half {
+	width: 490px;
+	float: right;
+	overflow: hidden;
 }
 
 /* page-footer */
@@ -100,7 +135,44 @@ div#page-footer {
 }
 
 /* customer-details */
-div#customer-details label {
-	width: 150px;
-	display: inline-block;
+div#customer-details input {
+	width: 332px;
+	float: left;
+}
+div#customer-details p {
+	overflow: hidden;
+}
+
+/* front-business-join & staff-business-details */
+div#front-business-join input,
+div#staff-business-details input {
+	width: 312px;
+	float: left;
+}
+div#front-business-join fieldset,
+div#staff-business-details fieldset {
+	margin: 0 0 20px;
+	padding: 10px;
+}
+div#front-business-join p,
+div#staff-business-details p {
+	overflow: hidden;
+}
+div#front-business-join textarea,
+div#staff-business-details textarea {
+	width: 972px;
+}
+
+/* front-contact */
+div#front-contact input {
+	width: 484px;
+}
+div#front-contact textarea {
+	width: 484px;
+	height: 151px;
+}
+
+/* front-businesses */
+form#businesses-search td {
+	padding: 5px 0;
 }

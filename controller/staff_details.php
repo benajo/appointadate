@@ -23,7 +23,7 @@ if (isset($_POST['add_details']) || isset($_POST['edit_details'])) {
 	}
 
 	if (empty($errorMessage)) {
-		$post = escape_post_data($_POST);
+		$post = escape_post_data();
 
 		if (isset($_POST['add_details'])) {
 			$sql = "INSERT INTO staff SET
@@ -39,11 +39,25 @@ if (isset($_POST['add_details']) || isset($_POST['edit_details'])) {
 			$result = $mysqli->query($sql);
 
 			if ($result) {
+				$staff_id = $mysqli->insert_id();
+			}
+
+			$sql = "INSERT INTO staff_timetable SET
+					staff_id = '{$staff_id}'";
+			$result2 = $mysqli->query($sql);
+
+			if ($result && $result2) {
 				$message = "Staff has been created.";
 
 				unset($_POST);
 			}
 			else {
+				$sql = "DELETE FROM staff WHERE staff_id = {$staff_id}";
+				$result = $mysqli->query($sql);
+
+				$sql = "DELETE FROM staff_timetable WHERE staff_id = {$staff_id}";
+				$result = $mysqli->query($sql);
+
 				$errorMessage = "There has been an unexpected error, please try again.";
 			}
 		}

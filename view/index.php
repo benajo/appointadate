@@ -1,8 +1,8 @@
 <div id="front-index">
-	<div class="left-content">
+	<div class="left-content-big">
 		<h1>Welcome</h1>
 
-		<p>Lorem ipsum Ea labore sunt proident et reprehenderit eiusmod ea eiusmod. Lorem ipsum Aliquip commodo ad dolor minim aliqua dolor laboris Duis nisi exercitation dolore irure dolor Excepteur Duis incididunt cillum incididunt pariatur in quis dolore laborum nostrud cillum fugiat eiusmod pariatur pariatur ad pariatur aliquip elit exercitation Duis in adipisicing exercitation aute irure ex reprehenderit dolor Duis eiusmod enim nisi Duis culpa consectetur fugiat irure proident incididunt commodo in do proident ullamco fugiat deserunt velit laboris qui mollit amet laborum in magna pariatur nulla laborum pariatur ullamco nulla elit Excepteur ex in quis qui amet velit officia adipisicing incididunt occaecat ut culpa elit dolore in in Duis ut sint veniam exercitation aute do ex non ut sit sit adipisicing et nulla irure incididunt Excepteur pariatur eu ex quis enim ex Excepteur ex exercitation dolore enim fugiat ut ex Ut labore ullamco elit voluptate officia deserunt labore in aute aute minim amet sit laborum ea laborum exercitation aliqua.</p>
+		<p>Appoint-a-Date is a web oriented scheduling system which allows users to organise appointments and provides a resource of structured information to effectively manage their business. Our system gives business owners the ability to purchase their own licensed product, from where they can then manage their staff and statistics. It offers an frontend platform for both administrative use and customer use. From their accounts, owners and staff can easily update their details. Customers have easy access to this as well as options to alter their availability and a range of other preferences. Additionally, stored information would be able to generate useful statistics based on client data.</p>
 
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi-00pKaEBMGigG3wG7uWfQsYymvqbSX4&amp;sensor=false"></script>
 		<script type="text/javascript">
@@ -44,12 +44,11 @@
 			google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
 
-
 		<div id="map-canvas" style="width: 680px; height: 300px;"></div>
 	</div>
 
-	<div class="right-content">
-		<h1>Recent Businesses</h1>
+	<div class="right-content-small">
+		<h1>New Businesses</h1>
 
 		<?php
 		$sql = "SELECT * FROM business
@@ -59,7 +58,7 @@
 		?>
 		<?php if ($businesses->num_rows) { ?>
 			<?php while ($business = $businesses->fetch_assoc()) { ?>
-				<div style="border: 1px solid #000;">
+				<div>
 					<h2><a href="businesses.php?business=<?php echo $business['business_id']; ?>"><?php echo $business['name']; ?></a></h2>
 
 					<?php
@@ -70,15 +69,12 @@
 					$types = $mysqli->query($sql);
 					?>
 					<?php if ($types->num_rows) { ?>
-						Types:
 						<ul>
 							<?php while ($type = $types->fetch_assoc()) { ?>
 								<li><?php echo $type['name']; ?></li>
 							<?php } ?>
 						</ul>
 					<?php } ?>
-
-					Created: <?php echo $business['created']; ?>
 				</div>
 			<?php } ?>
 		<?php } else { ?>
