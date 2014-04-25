@@ -176,3 +176,16 @@ div#front-contact textarea {
 form#businesses-search td {
 	padding: 5px 0;
 }
+
+/* appointment creation table */
+.trhighlight:hover {
+	background-color: rgb(255, 204, 153);
+	color: #FFFFFF;
+}
+.td-highlight {
+	text-align: center;
+}
+.highlight {
+    background-color: rgb(255, 204, 153);
+    color: #FFFFFF;
+}

@@ -21,4 +21,13 @@ $(function() {
 			return false;
 		};
 	});
+
+	$('table.column-highlighter td.td-highlight').hover(function() {
+	    var t = parseInt($(this).index()) + 1;
+	    $('td:nth-child(' + t + ')').addClass('highlight');
+	},
+	function() {
+	    var t = parseInt($(this).index()) + 1;
+	    $('td:nth-child(' + t + ')').removeClass('highlight');
+	});
 });
