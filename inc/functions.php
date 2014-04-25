@@ -320,14 +320,19 @@ function endOfDay($hour, $minute, $end)
 {
 	$endHour = ((int)substr($end, 0, 2))*100;
 	$endMinute = ((int)substr($end, -2));
+
 	if ($endMinute == 0)
 	{
-		if (($hour == $endHour - 100) && ($minute == 55))
+		if (($hour == $endHour - 100) && ($minute == 55)) {
 			return true;
+		}
 	}
 	else
-		if (($hour == $endHour) && ($minute == $endMinute - 5))
+	{
+		if (($hour == $endHour) && ($minute == $endMinute - 5)) {
 			return true;
+		}
+	}
 
 }
 

@@ -22,16 +22,18 @@
 				<tbody>
 					<?php
 					$availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_GET['business']);
-					//echo "<pre>";print_r($availableTimes);echo "</pre>";
+					// echo "<pre>";print_r($availableTimes);echo "</pre>";
 					foreach ($availableTimes as $hour => $minutes) { ?>
 						<tr class="trhighlight">
-							<td><?php echo $hour ?></td>
-							<?php foreach ($minutes as $minute => $value) {
-									if ($value == 1){ ?>
-										<td class = "td-highlight"><input name = "time" type="radio" value ="<?php echo substr($hour, 0, 2).":".$minute ?>"></td>
-									<?php } else { ?>
-										<td class = "td-highlight">&nbsp;</td>
-									<?php } ?>
+							<td>
+								<?php echo substr_replace(($hour < 1000 ? "0" : "").$hour, ":", 2, 0); ?>
+							</td>
+							<?php foreach ($minutes as $minute => $value) { ?>
+								<?php if ($value == 1){ ?>
+									<td class = "td-highlight"><input name = "time" type="radio" value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>"></td>
+								<?php } else { ?>
+									<td class = "td-highlight">&nbsp;</td>
+								<?php } ?>
 							<?php } ?>
 						</tr>
 
