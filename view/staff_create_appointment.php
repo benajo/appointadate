@@ -9,40 +9,48 @@
 			<input type="hidden" name="staff" value="<?php echo $_GET['staff']; ?>">
 			<input type="hidden" name="type" value="<?php echo $_GET['type']; ?>">
 
-			<table class="column-highlighter">
-				<thead>
-					<tr>
-						<td>&nbsp;</td>
-						<?php for ($i=0; $i < 60; $i+=5) { ?>
-							<td class = "td-highlight"><?php echo ($i < 10 ? "0" : "").$i; ?></td>
-						<?php } ?>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					$availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_SESSION['staff_business_id']);
-
-					foreach ($availableTimes as $hour => $minutes) { ?>
-						<tr class="trhighlight">
-							<td>
-								<?php echo substr_replace(($hour < 1000 ? "0" : "").$hour, ":", 2, 0); ?>
-							</td>
-							<?php foreach ($minutes as $minute => $value) { ?>
-								<td class = "td-highlight radio">
-									<?php if ($value == 1){ ?>
-										<input name = "time" type="radio" value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>">
-									<?php } else { ?>
-										&nbsp;
-									<?php } ?>
-								</td>
+			<?php $availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_SESSION['staff_business_id']);
+			//echo "<pre>";print_r($availableTimes);echo "</pre>";
+			if ($availableTimes == 'off') {
+				echo '<br> There are no appointments available for the current selection.';
+			}
+			else {
+				?>
+				<table class="column-highlighter">
+					<thead>
+						<tr>
+							<td>&nbsp;</td>
+							<?php for ($i=0; $i < 60; $i+=5) { ?>
+								<td class = "td-highlight"><?php echo ($i < 10 ? "0" : "").$i; ?></td>
 							<?php } ?>
 						</tr>
+					</thead>
+					<tbody>
+						<?php
+						foreach ($availableTimes as $hour => $minutes) { ?>
+							<tr class="trhighlight">
+								<td>
+									<?php echo substr_replace(($hour < 1000 ? "0" : "").$hour, ":", 2, 0); ?>
+								</td>
+								<?php foreach ($minutes as $minute => $value) { ?>
+									<td class = "td-highlight radio">
+										<?php if ($value == 1){ ?>
+											<input name = "time" type="radio" value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>">
+										<?php } else { ?>
+											&nbsp;
+										<?php } ?>
+									</td>
+								<?php } ?>
+							</tr>
 
-					<?php } ?>
-				</tbody>
-			</table>
+						<?php } ?>
+					</tbody>
+				</table>
 
-			<p><input type="submit" name="create_appointment" value="Submit"> <a href="staff_create_appointment.php?customer=<?php echo $_GET['customer']; ?>&amp;date=<?php echo $_GET['date']; ?>&amp;staff=<?php echo $_GET['staff'];?>">Back</a></p>
+				<p><input type="submit" name="create_appointment" value="Submit"> <a href="staff_create_appointment.php?customer=<?php echo $_GET['customer']; ?>&amp;date=<?php echo $_GET['date']; ?>&amp;staff=<?php echo $_GET['staff'];?>">Back</a></p>
+				<?php
+			}
+			?>
 		</form>
 
 	<?php } elseif (isset($_GET['customer']) && !empty($_GET['customer']) && isset($_GET['staff']) && !empty($_GET['staff']) && isset($_GET['date']) && !empty($_GET['date'])) { ?>

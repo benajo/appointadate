@@ -433,9 +433,16 @@ function endOfDay($hour, $minute, $end)
 * @author Vlad-Tudor Marchis
 * @version 2014-04-17
 */
-function splitGaps($available, $type, $business, $endTime)
+function splitGaps($available, $type, $endTime, $business = 0)
 {
 	global $mysqli;
+
+	$isStaff = false;
+	if ($business == 0)
+	{
+		$business = $_SESSION['staff_business_id'];
+		$isStaff = true;
+	}
 
 	$sql = "SELECT appointment_type_id, length
 			FROM appointment_type
@@ -459,12 +466,13 @@ function splitGaps($available, $type, $business, $endTime)
 	rsort($types);
 	$newGap = true;
 	$gapSize = 0;
+	$minutesStart = 00;
 	foreach ($available as $hour => $minutes)
 	{
-
+		// $minutesStart = 0;
 		foreach ($minutes as $minute => $value)
 		{
-				if ($newGap)
+			if ($newGap)
 			{
 				// echo $hour."<br>";
 				$hourStart = $hour;
@@ -479,7 +487,7 @@ function splitGaps($available, $type, $business, $endTime)
 
 				$gapSize += 5;
 			}
-			elseif ($gapSize >= $length)
+			else
 			{
 				$hourEnd = $hour;
 				if (endOfDay($hour, $minute, $endTime))
@@ -487,17 +495,21 @@ function splitGaps($available, $type, $business, $endTime)
 				else
 					$minutesEnd = $minute;
 				$increment = 5;
+				// echo $gapSize."<br>";
 				if ($gapSize >= $length)
 				{
-					for ($i = 0; $i < count($types); $i++)
-					{
-						if ($types[$i] + $length <= $gapSize)
+					// print_r($types);
+					if (!$isStaff)
+						for ($i = 0; $i < count($types); $i++)
 						{
-							$increment = $types[$i];
-							break;
-						}
-					}
+							if ($types[$i] + $length <= $gapSize)
+							{
 
+								$increment = $types[$i];
+								break;
+							}
+						}
+					// echo $increment."<br>";
 					// echo $hourStart." ";
 					// echo $minutesStart."<br>";
 					// echo $hourEnd." ";
@@ -505,9 +517,11 @@ function splitGaps($available, $type, $business, $endTime)
 
 					if ($hourStart == $hourEnd)
     				{
+    					// echo "you are here";
     					$i = 1;
     					for ($m = (int)$minutesStart+5; $m < $minutesEnd; $m += 5)
     					{
+    						// echo $m."<br>";
     						if ($m > $minutesEnd - $length)
     						{
     							$available[$hourStart][$m < 10 ? "0".$m : $m] = 0;
@@ -532,6 +546,7 @@ function splitGaps($available, $type, $business, $endTime)
     						{
     							for ($m = (int)$minutesStart+5; $m < 60; $m += 5)
     							{
+    								// echo $m."<br>";
 									if ($i < $increment/5)
 									{
     									$available[$h][$m < 10 ? "0".$m : $m] = 0;
@@ -574,15 +589,56 @@ function splitGaps($available, $type, $business, $endTime)
     					}
 					}
 				}
+				elseif ($gapSize >= $increment)
+				{
+					// echo $hourStart." ";
+					// echo $minutesStart."<br>";
+					// echo $hourEnd." ";
+					// echo $minutesEnd."<br>";
+
+					if ($hourStart == $hourEnd)
+    				{
+    					for ($m = (int)$minutesStart; $m < $minutesEnd; $m += 5)
+    					{
+    						$available[$hourStart][$m < 10 ? "0".$m : $m] = 0;
+    					}
+    				}
+    				else
+    				{
+    					//echo $hourStart."<br> ";
+						//echo $hourEnd." ";
+    					for ($h = $hourStart; $h <= $hourEnd; $h += 100)
+    					{
+    						if ($h == $hourStart)
+    						{
+    							for ($m = (int)$minutesStart; $m < 60; $m += 5)
+    							{
+									$available[$h][$m < 10 ? "0".$m : $m] = 0;
+    							}
+    						}
+    						elseif ($h == $hourEnd)
+    						{
+    							for ($m = 0; $m < $minutesEnd; $m += 5)
+    							{
+    								$available[$h][$m < 10 ? "0".$m : $m] = 0;
+    							}
+    						}
+    						else
+    						{
+    							for ($m = 0; $m < 60; $m += 5)
+    							{
+									$available[$h][$m < 10 ? "0".$m : $m] = 0;
+    							}
+    						}
+    					}
+					}
+				}
+
 				$newGap = true;
 				$gapSize = 0;
 				// echo "Inside For".$newGap."<br>";
 			}
-			else
-			{
-				$newGap = true;
-				$gapSize = 0;
-			}
+
 		}
 	}
 
@@ -593,104 +649,129 @@ function splitGaps($available, $type, $business, $endTime)
 * @author Vlad-Tudor Marchis
 * @version 2014-03-21
 */
-function findAvailableTimes($date, $type, $staff_id, $business)
+function findAvailableTimes($date, $type, $staff_id, $business = 0)
 {
 	// echo $date."<br>";
 	// echo $type."<br>";
 	// echo $staff_id;
 	global $mysqli;
+	$day = $date;
+	$date = DateTime::createFromFormat("D, d F Y", $date);
+	$date = $date->format("Y-m-d");
 
-	$day = strftime("%a",strtotime($date));
-	$day = strtolower($day);
+	$sqlException = "SELECT start, end, off
+					FROM staff_exception
+					WHERE staff_id = {$staff_id}
+					AND date = '{$date}'";
+	$resultHours = $mysqli->query($sqlException);
 
-	$start = $day.'_start';
-	$end = $day.'_end';
+	if ($resultHours->num_rows) {
+		$row = $resultHours->fetch_assoc();
+		if ($row['off'] == 0)
+		{
+			$start = 'start';
+			$end = 'end';
+		}
+		else
+			return 'off';
+	}
+	else
+	{
+		$day = strftime("%a",strtotime($day));
+		$day = strtolower($day);
 
-	$sqlHours = "SELECT {$start}, {$end}
-				FROM staff_timetable
-				WHERE staff_id = {$staff_id}";
+		$start = $day.'_start';
+		$end = $day.'_end';
+		$off = $day.'_off';
+
+		$sqlHours = "SELECT {$start}, {$end}, {$off}
+					FROM staff_timetable
+					WHERE staff_id = {$staff_id}";
+		$resultHours = $mysqli->query($sqlHours);
+		if ($resultHours->num_rows)
+		{
+			$row = $resultHours->fetch_assoc();
+			if ($row[$off] != 0)
+				return 'off';
+		}
+	}
 
 	$availableHours = array();
-	$resultHours = $mysqli->query($sqlHours);
-	if ($resultHours->num_rows)
+	$start = $row[$start];
+	$end = $row[$end];
+	if ($start < 1000)
+		$startHour = substr($start, 0, 1)."00";
+	else
+		$startHour = substr($start, 0, 2)."00";
+	if ($end < 1000)
+		$endHour = substr($end, 0, 1)."00";
+	else
+		$endHour = substr($end, 0, 2)."00";
+	$availableMinutes = array();
+	// For minutes of an hour that is not a business hour in its entirety
+	for ($i = (int)substr($startHour, -2); $i < substr($start, -2) ;$i += 5)
 	{
-		$row = $resultHours->fetch_assoc();
-		$start = $row[$start];
-		$end = $row[$end];
-		if ($start < 1000)
-			$startHour = substr($start, 0, 1)."00";
+		if ($i < 10)
+			$availableMinutes["0".$i] = 0;
 		else
-			$startHour = substr($start, 0, 2)."00";
-		if ($end < 1000)
-			$endHour = substr($end, 0, 1)."00";
+			$availableMinutes[$i] = 0;
+	}
+
+	for ($i = (int)substr($start, -2); $i < 60; $i += 5){
+		if ($i < 10)
+			$availableMinutes["0".$i] = 1;
 		else
-			$endHour = substr($end, 0, 2)."00";
+			$availableMinutes[$i] = 1;
+	}
+
+	$availableHours[$startHour] = $availableMinutes;
+	for ($h = $startHour+100; $h<=$endHour; $h += 100)
+	{
+		unset($availableMinutes);
 		$availableMinutes = array();
-		// For minutes of an hour that is not a business hour in its entirety
-		for ($i = (int)substr($startHour, -2); $i < substr($start, -2) ;$i += 5)
+		if ($h < $endHour)
 		{
-			if ($i < 10)
-				$availableMinutes["0".$i] = 0;
-			else
-				$availableMinutes[$i] = 0;
-		}
-
-		for ($i = (int)substr($start, -2); $i < 60; $i += 5){
-			if ($i < 10)
-				$availableMinutes["0".$i] = 1;
-			else
-				$availableMinutes[$i] = 1;
-		}
-
-		$availableHours[$startHour] = $availableMinutes;
-		for ($h = $startHour+100; $h<=$endHour; $h += 100)
-		{
-			unset($availableMinutes);
-			$availableMinutes = array();
-			if ($h < $endHour)
+			for ($m = 0; $m < 60; $m += 5)
 			{
-				for ($m = 0; $m < 60; $m += 5)
+				if ($m < 10)
+					$availableMinutes["0".$m] = 1;
+				else
+					$availableMinutes[$m] = 1;
+			}
+			$availableHours[$h] = $availableMinutes;
+		}
+		else
+		{
+			// echo strcmp(substr($end, -2), "00");
+			if (strcmp(substr($end, -2), "00") != 0)
+			{
+				for ($m = 0; $m < substr($end, -2); $m += 5)
 				{
 					if ($m < 10)
 						$availableMinutes["0".$m] = 1;
 					else
 						$availableMinutes[$m] = 1;
 				}
-				$availableHours[$h] = $availableMinutes;
-			}
-			else
-			{
-				// echo strcmp(substr($end, -2), "00");
-				if (strcmp(substr($end, -2), "00") != 0)
+				for ($m = substr($end, -2); $m < 60; $m += 5)
 				{
-					for ($m = 0; $m < substr($end, -2); $m += 5)
-					{
-						if ($m < 10)
-							$availableMinutes["0".$m] = 1;
-						else
-							$availableMinutes[$m] = 1;
-					}
-					for ($m = substr($end, -2); $m < 60; $m += 5)
-					{
-						if ($m < 10)
-							$availableMinutes["0".$m] = 0;
-						else
-							$availableMinutes[$m] = 0;
-					}
-					$availableHours[$h] = $availableMinutes;
+					if ($m < 10)
+						$availableMinutes["0".$m] = 0;
+					else
+						$availableMinutes[$m] = 0;
 				}
+				$availableHours[$h] = $availableMinutes;
 			}
 		}
 	}
 	// Altering the timetable based on previously booked appointments.
 
 	$datetimeStart = $date." "."00:00";
-	$datetimeStart = DateTime::createFromFormat("D, d F Y H:i", $datetimeStart);
+	$datetimeStart = DateTime::createFromFormat("Y-m-d H:i", $datetimeStart);
 	$datetimeStart = $datetimeStart->format("Y-m-d H:i:s");
 	// $datetimeStart .= ".000";
 
 	$datetimeEnd = $date." "."23:59";
-	$datetimeEnd = DateTime::createFromFormat("D, d F Y H:i", $datetimeEnd);
+	$datetimeEnd = DateTime::createFromFormat("Y-m-d H:i", $datetimeEnd);
 	$datetimeEnd = $datetimeEnd->format("Y-m-d H:i:s");
 	// $datetimeEnd .= ".000";
 
@@ -772,7 +853,7 @@ function findAvailableTimes($date, $type, $staff_id, $business)
 
     // echo $datetimeStart;
     // echo $datetimeEnd;
-    $availableHours = splitGaps($availableHours, $type, $business, $end);
+    $availableHours = splitGaps($availableHours, $type, $end, $business);
 	return $availableHours;
 }
 ?>

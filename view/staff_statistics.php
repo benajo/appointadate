@@ -73,7 +73,7 @@ elseif (isset($_POST['app_period'])) {
 <div id="staff-statistics">
 	<h1>Statistics</h1>
 
-
+	<?php /* ?>
 	<div>
 		<h2>Most frequently booked times</h2>
 		<p><em>Most frequently booked times and day for appointments</em></p>
@@ -92,6 +92,7 @@ elseif (isset($_POST['app_period'])) {
 
 		<?php //echo "<PRE>";print_r($freq_times);echo "</PRE>"; ?>
 	</div>
+	<?php */ ?>
 
 	<div>
 		<h2>Appointments by staff</h2>
