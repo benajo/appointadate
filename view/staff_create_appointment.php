@@ -92,7 +92,7 @@
 				<label for="formStaff">Staff</label>
 				<select name="staff" id="formStaff">
 					<option value="">Please select...</option>
-					<option value="anyone">Anyone</option>
+					<!-- <option value="anyone">Anyone</option> -->
 					<?php
 					$sql = "SELECT * FROM staff
 							WHERE business_id = {$mysqli->real_escape_string($_SESSION['staff_business_id'])}
