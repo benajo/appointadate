@@ -1,3 +1,10 @@
+/* body */
+body {
+	font-family: Arial;
+	font-size: 16px;
+	line-height: 1.4em;
+}
+
 /* clear */
 .clear-both {
 	clear: both;
@@ -12,7 +19,7 @@
 /* anchors */
 a, a:visited {
 	text-decoration: none;
-	/*color: */
+	color: #61929E;
 }
 a:hover {
 	text-decoration: underline;

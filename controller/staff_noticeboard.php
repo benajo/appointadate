@@ -17,7 +17,7 @@ if (isset($_POST['add_notice']) || isset($_POST['edit_notice'])) {
 					created_by  = '{$_SESSION['staff_id']}',
 					updated_by  = '{$_SESSION['staff_id']}'";
 			$result = $mysqli->query($sql);
-			echo $mysqli->error;
+
 			if ($result) {
 				$message = "Notice has been created.";
 

@@ -14,11 +14,11 @@ else {
 		<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 			<p>
 				<label for="formPassword1">New Password</label>
-				<input type="password" name="formPassword1" id="formPassword1" value="<?php echo isset($_POST['formPassword1']) ? $_POST['formPassword1'] : ""; ?>">
+				<input type="password" name="formPassword1" id="formPassword1" value="">
 			</p>
 			<p>
 				<label for="formPassword2">Confirm Password</label>
-				<input type="password" name="formPassword2" id="formPassword2" value="<?php echo isset($_POST['formPassword2']) ? $_POST['formPassword2'] : ""; ?>">
+				<input type="password" name="formPassword2" id="formPassword2" value="">
 			</p>
 			<p>
 				<input type="submit" name="reset_password_step2" value="Submit"> -

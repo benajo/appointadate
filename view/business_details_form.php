@@ -34,3 +34,38 @@
 	<label for="formContactEmail">Contact Email</label>
 	<input type="text" name="contact_email" id="formContactEmail" value="<?php echo isset($_POST['contact_email']) ? $_POST['contact_email'] : (isset($row['contact_email']) ? $row['contact_email'] : ""); ?>">
 </p>
+<div>
+	<label for="formBusinessTypes">Business Type(s)<br><br></label>
+	<select name="business_types[]" id="formBusinessTypes" size="5" multiple>
+		<?php
+		$sql = "SELECT * FROM type
+				ORDER BY name";
+		$types = $mysqli->query($sql);
+		?>
+		<?php while ($type = $types->fetch_assoc()) { ?>
+			<?php
+			$sql = "SELECT * FROM business_type
+					WHERE business_id = '{$_SESSION['staff_business_id']}'
+					AND type_id = '{$type['type_id']}'";
+			$result = $mysqli->query($sql);
+			$total = $result->num_rows;
+
+			if (isset($_POST['business_types']) && array_search($type['type_id'], $_POST['business_types']) !== false) {
+				$selected = "selected";
+			}
+			elseif (!isset($_POST['update_business_details']) && $total > 0) {
+				$selected = "selected";
+			}
+			else {
+				$selected = "";
+			}
+			?>
+			<option value="<?php echo $type['type_id']; ?>" <?php echo $selected; ?>>
+				<?php echo $type['name']; ?>
+			</option>
+		<?php } ?>
+	</select>
+	<div class="left">
+		<em>Hold CTRL and click to select multiple</em>
+	</div>
+</div>

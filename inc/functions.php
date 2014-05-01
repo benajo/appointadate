@@ -99,7 +99,9 @@ function escape_post_data()
 	$escaped = array();
 
 	foreach ($_POST as $k => $v) {
-		$escaped[$k] = $mysqli->real_escape_string(trim($v));
+		if (!is_array($v)) {
+			$escaped[$k] = $mysqli->real_escape_string(trim($v));
+		}
 	}
 
 	return $escaped;
@@ -168,23 +170,79 @@ function random_code($length)
 	return $code;
 }
 
+/**
+ * @author Ben Jovanic
+ * @version 2014-04-28
+ */
+function pagination($limit, $from, $page, $total, $url, $pageVar="page", $hash="", $get=array())
+{
+	$pages = ceil($total / $limit);
+
+	$getVars = "";
+
+	if (count($get)) {
+		foreach ($get as $val) {
+			if (isset($_GET[$val])) {
+				$getVars .= "{$val}={$_GET[$val]}&amp;";
+			}
+		}
+	}
+
+	$newUrl = "{$url}?{$getVars}{$pageVar}=PAGENUMBER".(strlen($hash) > 0 ? "#{$hash}" : "");
+
+	if ($pages > 1) {
+		?>
+		<p class="pagination">
+			<?php if ($page > 1) { ?>
+				<a href="<?php echo str_replace("PAGENUMBER", 1, $newUrl); ?>">First</a>
+				<a href="<?php echo str_replace("PAGENUMBER", $page - 1, $newUrl); ?>">Prev</a>
+			<?php } ?>
+
+			<?php for ($i=($page - 2); $i <= ($page + 2); $i++) { ?>
+				<?php if (($i >= 1) && ($i <= $pages)) { ?>
+					<?php if ($page == $i) { ?>
+						[<?php echo $i; ?>]
+					<?php } else { ?>
+						<a href="<?php echo str_replace("PAGENUMBER", $i, $newUrl); ?>"><?php echo $i; ?></a>
+					<?php } ?>
+				<?php } ?>
+			<?php } ?>
+
+			<?php if ($page < $pages) { ?>
+				<a href="<?php echo str_replace("PAGENUMBER", $page + 1, $newUrl); ?>">Next</a>
+				<a href="<?php echo str_replace("PAGENUMBER", $pages, $newUrl); ?>">Last</a>
+			<?php } ?>
+		</p>
+		<?php
+	}
+}
+
 
 /**
 * @author Vlad-Tudor Marchis
 * @version 2014-03-03
 */
-function search_businesses()
+function search_businesses($from, $limit)
 {
 	global $mysqli;
 
-	$name     = isset($_POST['keywords']) && !empty($_POST['keywords']) ? $_POST['keywords'] : "";;
-	$type     = isset($_POST['businessType']) && !empty($_POST['businessType']) ? $_POST['business;Type'] : "";;
-	$location = isset($_POST['postcode']) && !empty($_POST['postcode']) ? $_POST['postcode'] : "";;
-	$range    = isset($_POST['range']) && !empty($_POST['range']) ? $_POST['range'] : "";
+	$name     = isset($_GET['keywords'])     && !empty($_GET['keywords'])     ? $_GET['keywords']     : "";
+	$type     = isset($_GET['businessType']) && !empty($_GET['businessType']) ? $_GET['businessType'] : "";
+	$location = isset($_GET['postcode'])     && !empty($_GET['postcode'])     ? $_GET['postcode']     : "";
+	$range    = isset($_GET['range'])        && !empty($_GET['range'])        ? $_GET['range']        : "";
 
 	if (empty($name) && empty($type) && empty($location) && empty($range)) {
-		return "SELECT * FROM business
+		$sql = "SELECT * FROM business
 				ORDER BY name";
+		$result = $mysqli->query($sql);
+		$total = $result->num_rows;
+
+		$sql = "SELECT * FROM business
+				ORDER BY name
+				LIMIT {$from}, {$limit}";
+		$result = $mysqli->query($sql);
+
+		return array($result, $total);
 	}
 
 	$sql ="";
@@ -266,10 +324,6 @@ function search_businesses()
 		}
 
 		$where2 .=") ";
-		//$sql .= $where1;
-		//$and = true;
-		//echo $sql;
-		//$result = $mysqli->query($sql);
 	}
 
 	$sql .= $where1;
@@ -277,13 +331,20 @@ function search_businesses()
 	$sql .= $having;
 	$sql .= $order;
 
-	return $sql;
+	// get total number of results
+	$result = $mysqli->query($sql);
+	$total = $result->num_rows;
+
+	// get limited to pagination results
+	$result = $mysqli->query("{$sql} LIMIT {$from}, {$limit}");
+
+	return array($result, $total);
 
 }
 
 /**
 * @author Ben Jovanic
-* @version 2014-03-0314-04-01
+* @version 2014-03-03
 */
 function favourite_business($businessId)
 {
@@ -299,15 +360,47 @@ function favourite_business($businessId)
 
 		// if entry exists, they have already favourited the business, so allow them to remove the business
 		if ($result->num_rows) {
-			$html .= "<p><a href=\"businesses.php?remove_favourite_business={$businessId}\">Remove from favourites</a></p>";
+			$html .= "<div class=\"favourite\"><a href=\"businesses.php?remove_favourite_business={$businessId}\">Remove from favourites</a></div>";
 		}
 		// otherwise, allow them to add the business as a favourite
 		else {
-			$html .= "<p><a href=\"businesses.php?add_favourite_business={$businessId}\">Add to favourites</a></p>";
+			$html .= "<div class=\"favourite\"><a href=\"businesses.php?add_favourite_business={$businessId}\">Add to favourites</a></div>";
 		}
 	}
 
 	return $html;
+}
+
+/**
+ * @author Ben Jovanic
+ * @version 2014-04-28
+ */
+function business_types_html($business_id)
+{
+	global $mysqli;
+
+	$sql = "SELECT * FROM business_type bt
+			JOIN type t ON bt.type_id = t.type_id
+			WHERE business_id = {$business_id}
+			ORDER BY t.name";
+	$types = $mysqli->query($sql);
+
+	if ($types->num_rows) {
+		?>
+		<p class="types">
+			Business type(s):
+			<?php
+			$typesHTML = array();
+
+			while ($type = $types->fetch_assoc()) {
+				$typesHTML[] = "<a href=\"businesses.php?businessType={$type['type_id']}\">{$type['name']}</a>";
+			}
+
+			echo implode(", ", $typesHTML);
+			?>
+		</p>
+		<?php
+	}
 }
 
 

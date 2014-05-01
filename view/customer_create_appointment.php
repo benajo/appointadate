@@ -108,7 +108,7 @@
 
 			<p>
 				<label for="date">Day</label>
-				<input type="text" name="date" id="date" class="datepicker">
+				<input type="text" name="date" id="date" class="datepicker-no-past">
 			</p>
 
 			<p><input type="submit" value="Submit"> <a href="customer_create_appointment.php">Back</a></p>

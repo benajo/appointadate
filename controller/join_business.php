@@ -12,14 +12,15 @@ if (isset($_POST['add_business'])) {
 	$errorMessage .= validate_form($_POST['contact_name'], "req", "Contact Name");
 	$errorMessage .= validate_form($_POST['contact_phone'], "req", "Contact Phone");
 	$errorMessage .= validate_form($_POST['contact_email'], "req", "Contact Email");
+	$errorMessage .= validate_form((isset($_POST['business_types']) ? count($_POST['business_types']) : ""), "req", "Business Types");
 
 	$errorMessage .= validate_form($_POST['first_name'], "req", "First Name");
 	$errorMessage .= validate_form($_POST['last_name'], "req", "Last Name");
 	$errorMessage .= validate_form($_POST['email'], "req", "Email");
 
-	if (!empty($_POST['password1']) || !empty($_POST['password2'])) {
-		$errorMessage .= validate_password($_POST['password1'], $_POST['password2']);
+	$errorMessage .= validate_password($_POST['password1'], $_POST['password2']);
 
+	if (!empty($_POST['password1']) || !empty($_POST['password2'])) {
 		$hash = password_hash($_POST['password1'], PASSWORD_DEFAULT);
 
 		$errorMessage .= !password_verify($_POST['password1'], $hash) ? "Password hashing error, please try again.<br>" : "";
@@ -28,6 +29,9 @@ if (isset($_POST['add_business'])) {
 	$errorMessage .= validate_form($_POST['pass_hint'], "req", "Password Hint");
 
 	if (empty($errorMessage)) {
+
+		$post = escape_post_data();
+
 		$sql = "INSERT INTO business SET
 				name           = '{$post['name']}',
 				address_line_1 = '{$post['address_line_1']}',
@@ -45,11 +49,25 @@ if (isset($_POST['add_business'])) {
 		$result = $mysqli->query($sql);
 
 		if ($result) {
-			$business_id = $mysqli->insert_id();
+			$business_id = $mysqli->insert_id;
 		}
 
 		$sql = "INSERT INTO business_timetable SET
-				business_id = '{$business_id}'";
+				business_id = '{$business_id}',
+				mon_start   = 800,
+				mon_end     = 2000,
+				tue_start   = 800,
+				tue_end     = 2000,
+				wed_start   = 800,
+				wed_end     = 2000,
+				thu_start   = 800,
+				thu_end     = 2000,
+				fri_start   = 800,
+				fri_end     = 2000,
+				sat_start   = 800,
+				sat_end     = 2000,
+				sun_start   = 800,
+				sun_end     = 2000";
 		$result2 = $mysqli->query($sql);
 
 		$sql = "INSERT INTO staff SET
@@ -65,25 +83,38 @@ if (isset($_POST['add_business'])) {
 		$result3 = $mysqli->query($sql);
 
 		if ($result3) {
-			$staff_id = $mysqli->insert_id();
+			$staff_id = $mysqli->insert_id;
 		}
 
 		$sql = "INSERT INTO staff_timetable SET
 				staff_id = '{$staff_id}'";
 		$result4 = $mysqli->query($sql);
 
+		$result5 = array();
+
+		foreach ($_POST['business_types'] as $k => $v) {
+			$sql = "INSERT INTO business_type SET
+					type_id = '{$v}',
+					business_id = '{$business_id}'";
+			$result5[] = $mysqli->query($sql);
+		}
+
 		// if any of the queries fail, then any others that might have succeeded must be removed/undone
-		if (!$result || !$result2 || !$result3 || !$result4) {
-			$sql = "DELETE FROM business WHERE business_id = {$business_id}";
-			$result = $mysqli->query($sql);
+		if (!$result || !$result2 || !$result3 || !$result4 || array_search(false, $result5) !== false) {
 
 			$sql = "DELETE FROM business_timetable WHERE business_id = {$business_id}";
+			$result = $mysqli->query($sql);
+
+			$sql = "DELETE FROM staff_timetable WHERE staff_id = {$staff_id}";
+			$result = $mysqli->query($sql);
+
+			$sql = "DELETE FROM business_type WHERE business_id = {$business_id}";
 			$result = $mysqli->query($sql);
 
 			$sql = "DELETE FROM staff WHERE business_id = {$business_id} OR staff_id = {$staff_id}";
 			$result = $mysqli->query($sql);
 
-			$sql = "DELETE FROM staff_timetable WHERE staff_id = {$staff_id}";
+			$sql = "DELETE FROM business WHERE business_id = {$business_id}";
 			$result = $mysqli->query($sql);
 
 			$errorMessage = "There has been an unexpected error, please try again.";

@@ -173,7 +173,39 @@ div#front-contact textarea {
 }
 
 /* front-businesses */
+div#front-businesses h1.title,
+div#front-businesses h2.title,
+div#front-businesses div.favourite {
+	margin-bottom: 0;
+	display: inline-block;
+}
+div#front-businesses div.timetable {
+	width: 250px;
+	margin: 0 0 10px 20px;
+	padding: 10px;
+	float: right;
+	border: 1px solid #000;
+}
+div#front-businesses div.timetable td {
+	width: 125px;
+}
+div#front-businesses div.timetable td:last-child {
+	text-align: right;
+}
+
 form#businesses-search td {
+	padding: 5px 0;
+}
+
+/* staff-timetable & staff-business-timetable */
+div#staff-timetable label,
+div#staff-business-timetable label {
+	width: auto;
+	display: inline;
+	float: none;
+}
+div#staff-timetable td,
+div#staff-business-timetable td {
 	padding: 5px 0;
 }
 

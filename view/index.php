@@ -61,20 +61,7 @@
 				<div>
 					<h2><a href="businesses.php?business=<?php echo $business['business_id']; ?>"><?php echo $business['name']; ?></a></h2>
 
-					<?php
-					$sql = "SELECT * FROM business_type bt
-							JOIN type t ON bt.type_id = t.type_id
-							WHERE business_id = {$business['business_id']}
-							ORDER BY name";
-					$types = $mysqli->query($sql);
-					?>
-					<?php if ($types->num_rows) { ?>
-						<ul>
-							<?php while ($type = $types->fetch_assoc()) { ?>
-								<li><?php echo $type['name']; ?></li>
-							<?php } ?>
-						</ul>
-					<?php } ?>
+					<?php business_types_html($business['business_id']); ?>
 				</div>
 			<?php } ?>
 		<?php } else { ?>

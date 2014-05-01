@@ -79,12 +79,14 @@ if (isset($_POST['reset_password_step1'])) {
 
 				if ($_POST['formType'] == "customer") {
 					$sql = "UPDATE customer SET
-							code = '{$mysqli->real_escape_string($code)}'";
+							code = '{$mysqli->real_escape_string($code)}'
+							WHERE customer_id = '{$id}'";
 					$mysqli->query($sql);
 				}
 				else {
 					$sql = "UPDATE staff SET
-							code = '{$mysqli->real_escape_string($code)}'";
+							code = '{$mysqli->real_escape_string($code)}'
+							WHERE staff_id = '{$id}'";
 					$mysqli->query($sql);
 				}
 
@@ -114,12 +116,12 @@ elseif (isset($_POST['reset_password_step2'])) {
 		$code = $mysqli->real_escape_string($_GET['code']);
 
 		if (isset($_GET['customer'])) {
-			$sql = "SELECT customer_id AS id, first_name, last_name FROM customer
+			$sql = "SELECT customer_id AS id, first_name, last_name, email FROM customer
 					WHERE customer_id = '{$id}'
 					AND   code        = '{$code}'";
 		}
 		else {
-			$sql = "SELECT staff_id AS id, first_name, last_name FROM staff
+			$sql = "SELECT staff_id AS id, first_name, last_name, email FROM staff
 					WHERE staff_id = '{$id}'
 					AND   code     = '{$code}'";
 		}
@@ -152,27 +154,31 @@ elseif (isset($_POST['reset_password_step2'])) {
 			$mail->setFrom('reset@appointadate.com', 'Appoint-A-Date Password Reset');
 			$mail->addReplyTo('noreply@appointadate.com');
 
-			$mail->addAddress($_POST['formEmail']);
+			$mail->addAddress($row['email']);
 			$mail->isHTML(true);
 
 			$mail->Subject = "Appoint-A-Date password reset";
 			$mail->Body    = $emailMessage;
 
 			if ($mail->send()) {
-				$message = "An email has been sent to you with information about how to reset your password.<br>Please ensure you check your spam/junk folder.";
+				$message = "Your new password has been set and you should not be able to login.";
 
-				if ($_POST['formType'] == "customer") {
+				if (isset($_GET['customer'])) {
 					$sql = "UPDATE customer SET
-							code = '{$mysqli->real_escape_string($code)}'";
+							password = '{$hash}',
+							code     = '{$mysqli->real_escape_string($code)}'
+							WHERE customer_id = '{$id}'";
 					$mysqli->query($sql);
 				}
 				else {
 					$sql = "UPDATE staff SET
-							code = '{$mysqli->real_escape_string($code)}'";
+							password = '{$hash}',
+							code     = '{$mysqli->real_escape_string($code)}'
+							WHERE staff_id = '{$id}'";
 					$mysqli->query($sql);
 				}
 
-				unset($_POST);
+				unset($_POST, $_GET);
 			}
 			else {
 				$errorMessage = "There has been an unexpected error, please try agian.";

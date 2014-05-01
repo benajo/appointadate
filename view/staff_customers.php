@@ -26,12 +26,20 @@ if (isset($_GET['keywords'])) {
 	</form>
 
 	<?php
+	$limit = 20;
+	$page = isset($_GET['page']) ? $_GET['page'] : 1;
+	$from = ($page-1) * $limit;
+
 	$sql = "SELECT * FROM customer c
 			JOIN appointment a ON c.customer_id = a.customer_id
 			WHERE a.business_id = {$_SESSION['staff_business_id']}
 			{$searchClause}
 			GROUP BY c.customer_id
 			ORDER BY c.first_name";
+	$result = $mysqli->query($sql);
+	$total = $result->num_rows;
+
+	$sql .= " LIMIT {$from}, {$limit}";
 	$result = $mysqli->query($sql);
 	?>
 	<?php if ($result->num_rows) { ?>
@@ -51,6 +59,9 @@ if (isset($_GET['keywords'])) {
 				</tr>
 			<?php } ?>
 		</table>
+
+		<?php pagination($limit, $from, $page, $total, "staff_customers.php", "page", "", array("keywords")); ?>
+
 	<?php } else { ?>
 		<p>You have no appointments.</p>
 	<?php } ?>

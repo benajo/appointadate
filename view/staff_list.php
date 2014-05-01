@@ -1,6 +1,8 @@
 <div id="staff-list">
 	<h1>Staff List</h1>
 
+	<p><a href="staff_add_details.php">Add new staff member</a></p>
+
 	<?php
 	$sql = "SELECT * FROM staff
 			WHERE business_id = '{$_SESSION['staff_business_id']}'
@@ -20,7 +22,9 @@
 					<td><?php echo $row['first_name']." ".$row['last_name']; ?></td>
 					<td><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
 					<td><?php echo $row['admin'] == 1 ? "Yes" : "No"; ?></td>
-					<td><a href="staff_edit_details.php?staff=<?php echo $row['staff_id']; ?>">edit</a> - <a href="#" class="confirm-delete">delete</a></td>
+					<td>
+						<a href="staff_edit_details.php?staff=<?php echo $row['staff_id']; ?>">edit</a>
+					</td>
 				</tr>
 			<?php } ?>
 		</table>

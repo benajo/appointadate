@@ -12,11 +12,13 @@
 	<link type="text/css" rel="stylesheet" href="./style/jquery-ui.min.css">
 	<link type="text/css" rel="stylesheet" href="./style/default.css">
 	<link type="text/css" rel="stylesheet" href="./style/front.css">
+
+	<link href="./images/favicon.ico" rel="icon" type="image/x-icon">
 </head>
 <body>
 <div id="page-container">
 	<div id="page-header">
-		<div id="page-logo"><img src="images/appoint-a-date-logo.png" alt="Appoint-A-Date"></div>
+		<div id="page-logo"><a href="index.php"><img src="images/appoint-a-date-logo.png" alt="Appoint-A-Date"></a></div>
 
 		<div id="page-login">
 			<?php if ($_SESSION['customer_logged_in']) { ?>
@@ -86,11 +88,9 @@
 				<!-- <li><a href="staff_create_appointment.php">Create Appointment</a></li> -->
 				<li><a href="staff_statistics.php">Statistics</a></li>
 				<li><a href="staff_list.php">Staff List</a></li>
-				<li><a href="staff_add_details.php">Add Staff</a></li>
 				<li><a href="staff_customers.php">Customers</a></li>
 				<li><a href="staff_noticeboard.php">Noticeboard</a></li>
 				<li><a href="staff_business_details.php">Business Details</a></li>
-				<li><a href="staff_business_timetable.php">Business Timetable</a></li>
 
 			<?php } else { ?>
 
