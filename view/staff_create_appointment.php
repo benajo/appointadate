@@ -1,7 +1,6 @@
 <div id="customer-create-appointment">
 	<?php if (isset($_GET['customer']) && !empty($_GET['customer']) && isset($_GET['staff']) && !empty($_GET['staff']) && isset($_GET['date']) && !empty($_GET['date']) && isset($_GET['type']) && !empty($_GET['type'])) { ?>
 
-
 		<h1>Create Appointment - Select a Time</h1>
 
 		<form action="staff_create_appointment.php" method="post">
@@ -22,18 +21,20 @@
 				<tbody>
 					<?php
 					$availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_SESSION['staff_business_id']);
-					// echo "<pre>";print_r($availableTimes);echo "</pre>";
+
 					foreach ($availableTimes as $hour => $minutes) { ?>
 						<tr class="trhighlight">
 							<td>
 								<?php echo substr_replace(($hour < 1000 ? "0" : "").$hour, ":", 2, 0); ?>
 							</td>
 							<?php foreach ($minutes as $minute => $value) { ?>
-								<?php if ($value == 1){ ?>
-									<td class = "td-highlight"><input name = "time" type="radio" value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>"></td>
-								<?php } else { ?>
-									<td class = "td-highlight">&nbsp;</td>
-								<?php } ?>
+								<td class = "td-highlight radio">
+									<?php if ($value == 1){ ?>
+										<input name = "time" type="radio" value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>">
+									<?php } else { ?>
+										&nbsp;
+									<?php } ?>
+								</td>
 							<?php } ?>
 						</tr>
 

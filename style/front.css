@@ -221,3 +221,18 @@ div#staff-business-timetable td {
     background-color: rgb(255, 204, 153);
     color: #FFFFFF;
 }
+.td-highlight.radio {
+	width: 70px;
+	height: 30px;
+}
+.td-highlight.radio input[type=radio] {
+	width: 70px;
+	height: 30px;
+	display: block;
+}
+.td-highlight.radio input[type=radio]:hover {
+	cursor: pointer;
+}
+.td-highlight.radio:hover {
+	background: #fff;
+}
