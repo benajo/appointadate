@@ -35,7 +35,7 @@
 			<tr>
 				<th>Business</th>
 				<th>Staff</th>
-				<th>Time &amp; Date</th>
+				<th>Date/Time</th>
 				<th>Type</th>
 				<th>Length</th>
 				<th>Status</th>
@@ -46,7 +46,7 @@
 				<tr>
 					<td><?php echo $row['business_name']; ?></td>
 					<td><?php echo strlen($row['staff_name']) > 0 ? $row['staff_name'] : "---"; ?></td>
-					<td><?php echo date("H:i \o\\n d-m-Y", strtotime($row['appointment_datetime'])); ?></td>
+					<td><?php echo date("d M Y @ H:i", strtotime($row['appointment_datetime'])); ?></td>
 					<td><?php echo $row['appointment_type']; ?></td>
 					<td><?php echo $row['appointment_length']; ?> minutes</td>
 					<td>

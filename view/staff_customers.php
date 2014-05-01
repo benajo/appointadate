@@ -55,7 +55,7 @@ if (isset($_GET['keywords'])) {
 					<td><?php echo $row['first_name']." ".$row['last_name']; ?></td>
 					<td><?php echo strlen($row['phone']) ? $row['phone'] : "-"; ?></td>
 					<td><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
-					<td><a href="#?customer=<?php echo $row['customer_id']; ?>">New Appointment</a></td>
+					<td><a href="staff_create_appointment.php?customer=<?php echo $row['customer_id']; ?>">New Appointment</a></td>
 				</tr>
 			<?php } ?>
 		</table>
