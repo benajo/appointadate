@@ -51,7 +51,8 @@ if (isset($_POST['add_notice']) || isset($_POST['edit_notice'])) {
 }
 elseif (isset($_GET['remove_notice'])) {
 	$sql = "DELETE FROM noticeboard
-			WHERE noticeboard_id = {$mysqli->real_escape_string($_GET['remove_notice'])}";
+			WHERE noticeboard_id = {$mysqli->real_escape_string($_GET['remove_notice'])}
+			AND business_id = '{$_SESSION['staff_business_id']}'";
 	$result = $mysqli->query($sql);
 
 	if ($result) {

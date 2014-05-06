@@ -1,4 +1,5 @@
 <?php
+// removes the customers favourited business
 if (isset($_GET['remove_favourite_business'])) {
 	$sql = "DELETE FROM customer_pref_business
 			WHERE business_id = {$mysqli->real_escape_string($_GET['remove_favourite_business'])}

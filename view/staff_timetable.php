@@ -53,7 +53,7 @@ class StaffTimetable
 			echo "<td>";
 
 			echo "<label for=\"{$name}\">Off</label>&nbsp;";
-			echo "<input type=\"checkbox\" name=\"{$name}\" id=\"{$name}\" value=\"1\" {$checked}></td>";
+			echo "<input type=\"checkbox\" name=\"{$name}\" id=\"{$name}\" value=\"1\" {$checked}>";
 
 			echo "</td>";
 

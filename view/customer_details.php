@@ -23,7 +23,7 @@ if (!$join) {
 			</p>
 			<p>
 				<label for="formEmail">Email</label>
-				<input type="email" name="email" id="formEmail" value="<?php echo isset($_POST['email']) ? $_POST['email'] : (isset($row['email']) ? $row['email'] : ""); ?>">
+				<input type="text" name="email" id="formEmail" value="<?php echo isset($_POST['email']) ? $_POST['email'] : (isset($row['email']) ? $row['email'] : ""); ?>">
 			</p>
 			<p>
 				<label for="formPhone">Phone</label>

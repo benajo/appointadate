@@ -1,8 +1,5 @@
 <?php
-/**
-* @author Vlad Marchis, Ben Jovanic
-* @version 2014-03-02
-*/
+
 if (isset($_POST['login'])) {
 	$errorMessage  = validate_form($_POST['loginEmail'], "req", "Email");
 	$errorMessage .= validate_form($_POST['loginEmail'], "email", "Email");
@@ -17,25 +14,27 @@ if (isset($_POST['login'])) {
 			$sql = "SELECT customer_id, password FROM customer
 					WHERE email = '{$post['loginEmail']}'";
 		}
-		else { // if it's a staff loggin in
+		else { // if it's a staff logging in
 			$sql = "SELECT staff_id, business_id, password, admin FROM staff
 					WHERE email = '{$post['loginEmail']}'";
 		}
 
 		$result = $mysqli->query($sql);
 
+		// ensure the email is in the DB
 		if ($result && $result->num_rows > 0){
 			$row = $result->fetch_assoc();
 
+			// check their password is correct
 			if (password_verify($_POST['loginPassword'], $row['password'])) {
-				if ($customer) {
+				if ($customer) { // login customer in
 					$_SESSION['customer_logged_in'] = true;
 					$_SESSION['customer_id']        = $row['customer_id'];
 
 					header("Location: ./customer_appointments.php");
 					exit;
 				}
-				else {
+				else { // login staff in
 					$_SESSION['staff_logged_in']   = true;
 					$_SESSION['staff_id']          = $row['staff_id'];
 					$_SESSION['staff_admin']       = $row['admin'];
@@ -45,12 +44,14 @@ if (isset($_POST['login'])) {
 					exit;
 				}
 			}
+			// incorrect password
 			else {
-				$errorMessage = "Incorrect password.";
+				$errorMessage = "Incorrect details.";
 			}
 		}
+		// email address is not in the DB
 		else {
-			$errorMessage = "Email address is not in our database.";
+			$errorMessage = "Incorrect details.";
 		}
 	}
 }

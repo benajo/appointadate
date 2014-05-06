@@ -4,11 +4,11 @@ $longitude = isset($_POST['longitude']) ? $_POST['longitude'] : (isset($row['lon
 ?>
 <p>
 	<label for="formLatitude">Latitude</label>
-	<input type="text" name="latitude" id="formLatitude" value="<?php echo $latitude; ?>">
+	<input type="text" name="latitude" id="formLatitude" readonly value="<?php echo $latitude; ?>">
 </p>
 <p>
 	<label for="formLongitude">Longitude</label>
-	<input type="text" name="longitude" id="formLongitude" value="<?php echo $longitude; ?>">
+	<input type="text" name="longitude" id="formLongitude" readonly value="<?php echo $longitude; ?>">
 </p>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi-00pKaEBMGigG3wG7uWfQsYymvqbSX4&amp;sensor=false"></script>

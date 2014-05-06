@@ -9,13 +9,13 @@
 			<input type="hidden" name="staff" value="<?php echo $_GET['staff']; ?>">
 			<input type="hidden" name="type" value="<?php echo $_GET['type']; ?>">
 
-			<?php $availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_SESSION['staff_business_id']);
-			//echo "<pre>";print_r($availableTimes);echo "</pre>";
-			if ($availableTimes == 'off') {
-				echo '<br> There are no appointments available for the current selection.';
-			}
-			else {
-				?>
+			<?php $availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_SESSION['staff_business_id']); ?>
+
+			<?php if ($availableTimes == 'off') { ?>
+				<p>There are no appointments available for the current selection.</p>
+
+				<p><a href="staff_create_appointment.php?customer=<?php echo $_GET['customer']; ?>&amp;date=<?php echo $_GET['date']; ?>&amp;staff=<?php echo $_GET['staff'];?>">Back</a></p>
+			<?php } else { ?>
 				<table class="column-highlighter">
 					<thead>
 						<tr>

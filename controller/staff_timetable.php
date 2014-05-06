@@ -12,7 +12,9 @@ if (isset($_POST['update_staff_timetable'])) {
 
 	$errorMessage = "";
 
+	// loop through each day of the week to validate the users input
 	foreach ($days as $k => $v) {
+		// creates a time in the format: 800 for 8am, 2130 for 9:30pm
 		$start = (int)($_POST["{$k}_start_h"].($_POST["{$k}_start_m"] < 10 ? "0" : "").$_POST["{$k}_start_m"]);
 		$end   = (int)($_POST["{$k}_end_h"].  ($_POST["{$k}_end_m"]   < 10 ? "0" : "").$_POST["{$k}_end_m"]);
 
@@ -26,10 +28,12 @@ if (isset($_POST['update_staff_timetable'])) {
 		$post = escape_post_data();
 
 		foreach ($days as $k => $v) {
+			// only change the time if it is set
 			if ($post["{$k}_start_h"] > -1) {
 				$data[] = "{$k}_start = '".$post["{$k}_start_h"] . ($post["{$k}_start_m"] < 10 ? "0" : "") . $post["{$k}_start_m"]."'";
 			}
 
+			// only change the time if it is set
 			if ($post["{$k}_end_h"] > -1) {
 				$data[] = "{$k}_end = '".$post["{$k}_end_h"] . ($post["{$k}_end_m"] < 10 ? "0" : "") . $post["{$k}_end_m"]."'";
 			}

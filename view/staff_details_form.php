@@ -8,7 +8,7 @@
 </p>
 <p>
 	<label for="formEmail">Email</label>
-	<input type="email" name="email" id="formEmail" value="<?php echo isset($_POST['email']) ? $_POST['email'] : (isset($row['email']) ? $row['email'] : ""); ?>">
+	<input type="text" name="email" id="formEmail" value="<?php echo isset($_POST['email']) ? $_POST['email'] : (isset($row['email']) ? $row['email'] : ""); ?>">
 </p>
 <p>
 	<label for="formPassword1"><?php echo $edit ? "New " : ""; ?>Password</label>
@@ -22,7 +22,7 @@
 	<label for="formPassHint">Password Hint</label>
 	<input type="text" name="pass_hint" id="formPassHint" value="<?php echo isset($_POST['pass_hint']) ? $_POST['pass_hint'] : (isset($row['pass_hint']) ? $row['pass_hint'] : ""); ?>">
 </p>
-<?php if ($_SERVER['PHP_SELF'] != "/business_join.php") { // so this doesn't show on busniess join page ?>
+<?php if ($_SERVER['PHP_SELF'] != "/join_business.php") { // so this doesn't show on busniess join page ?>
 	<p>
 		<span class="label">Admin?</span>
 

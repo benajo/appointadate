@@ -1,4 +1,5 @@
 <?php
+// ensure there is an appointment GET variable
 if (isset($_GET['appointment'])) {
 	$appointment_id = $mysqli->real_escape_string($_GET['appointment']);
 

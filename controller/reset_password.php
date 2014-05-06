@@ -17,6 +17,7 @@ if (((isset($_GET['customer']) && !empty($_GET['customer'])) || (isset($_GET['st
 
 	$result = $mysqli->query($sql);
 
+	// if false then return customer to first step: entering their email address
 	if (!$result->num_rows) {
 		header("Location: reset_password.php");
 		exit;
@@ -186,7 +187,7 @@ elseif (isset($_POST['reset_password_step2'])) {
 			}
 		}
 		else {
-			$errorMessage = "Email address is not in our database.";
+			$errorMessage = "There has been an unexpected error, please try agian.";
 		}
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['contact'])) {
+	// validate the contact form fields
 	$errorMessage  = validate_form($_POST['formName'], "req", "Name");
 	$errorMessage .= validate_form($_POST['formEmail'], "req", "Email");
 	$errorMessage .= validate_form($_POST['formEmail'], "email", "Email");
@@ -7,6 +8,7 @@ if (isset($_POST['contact'])) {
 	$errorMessage .= validate_form($_POST['formQuery'], "req", "Query");
 
 	if (empty($errorMessage)) {
+		// add in the line breaks for the email
 		$query = str_replace('\n', '<br>', $_POST['formQuery']);
 
 		$emailMessage  = "<p><b>Name</b>: {$_POST['formName']}</p>";
@@ -29,7 +31,6 @@ if (isset($_POST['contact'])) {
 		$mail->addReplyTo($_POST['formEmail']);
 
 		$mail->addAddress("appointadate@gmail.com");
-		$mail->addAddress("ben@jovanic.co.uk");
 		$mail->isHTML(true);
 
 		$mail->Subject = "Appoint-A-Date contact query";

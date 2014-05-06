@@ -1,4 +1,5 @@
 <?php
+// controller to delete an appointment by a staff
 if (isset($_GET['delete_appointment'])) {
 	$sql = "DELETE FROM appointment
 			WHERE appointment_id = '{$mysqli->real_escape_string($_GET['delete_appointment'])}'";

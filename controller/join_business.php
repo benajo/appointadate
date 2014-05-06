@@ -3,20 +3,32 @@ if (isset($_POST['add_business'])) {
 
 	$errorMessage  = validate_form($_POST['name'], "req", "Business Name");
 	$errorMessage .= validate_form($_POST['address_line_1'], "req", "Address Line 1");
-	$errorMessage .= validate_form($_POST['address_line_2'], "req", "Address Line 2");
+	$errorMessage .= validate_form($_POST['address_line_1'], "alnum_s", "Address Line 1");
+	$errorMessage .= validate_form($_POST['address_line_2'], "alnum_s", "Address Line 2");
 	$errorMessage .= validate_form($_POST['city'], "req", "City");
+	$errorMessage .= validate_form($_POST['city'], "alpha_s", "City");
 	$errorMessage .= validate_form($_POST['county'], "req", "County");
+	$errorMessage .= validate_form($_POST['county'], "alpha_s", "County");
 	$errorMessage .= validate_form($_POST['postcode'], "req", "Postcode");
+	$errorMessage .= validate_form($_POST['postcode'], "alnum_s", "Postcode");
 	$errorMessage .= validate_form($_POST['latitude'], "req", "Latitude");
+	$errorMessage .= validate_form($_POST['latitude'], "num", "Latitude");
 	$errorMessage .= validate_form($_POST['longitude'], "req", "Longitude");
+	$errorMessage .= validate_form($_POST['longitude'], "num", "Longitude");
 	$errorMessage .= validate_form($_POST['contact_name'], "req", "Contact Name");
+	$errorMessage .= validate_form($_POST['contact_name'], "name", "Contact Name");
 	$errorMessage .= validate_form($_POST['contact_phone'], "req", "Contact Phone");
+	$errorMessage .= validate_form($_POST['contact_phone'], "num_s", "Contact Phone");
 	$errorMessage .= validate_form($_POST['contact_email'], "req", "Contact Email");
+	$errorMessage .= validate_form($_POST['contact_email'], "email", "Contact Email");
 	$errorMessage .= validate_form((isset($_POST['business_types']) ? count($_POST['business_types']) : ""), "req", "Business Types");
 
 	$errorMessage .= validate_form($_POST['first_name'], "req", "First Name");
+	$errorMessage .= validate_form($_POST['first_name'], "name", "First Name");
 	$errorMessage .= validate_form($_POST['last_name'], "req", "Last Name");
+	$errorMessage .= validate_form($_POST['last_name'], "name", "Last Name");
 	$errorMessage .= validate_form($_POST['email'], "req", "Email");
+	$errorMessage .= validate_form($_POST['email'], "email", "Email");
 
 	$errorMessage .= validate_password($_POST['password1'], $_POST['password2']);
 
@@ -32,6 +44,7 @@ if (isset($_POST['add_business'])) {
 
 		$post = escape_post_data();
 
+		// insert the new business into the DB
 		$sql = "INSERT INTO business SET
 				name           = '{$post['name']}',
 				address_line_1 = '{$post['address_line_1']}',
@@ -52,6 +65,7 @@ if (isset($_POST['add_business'])) {
 			$business_id = $mysqli->insert_id;
 		}
 
+		// create the businesses timetable
 		$sql = "INSERT INTO business_timetable SET
 				business_id = '{$business_id}',
 				mon_start   = 800,
@@ -70,6 +84,7 @@ if (isset($_POST['add_business'])) {
 				sun_end     = 2000";
 		$result2 = $mysqli->query($sql);
 
+		// add the staff to the DB
 		$sql = "INSERT INTO staff SET
 				business_id = '{$business_id}',
 				first_name  = '{$post['first_name']}',
@@ -86,10 +101,26 @@ if (isset($_POST['add_business'])) {
 			$staff_id = $mysqli->insert_id;
 		}
 
+		// add the staffs timetable to the DB
 		$sql = "INSERT INTO staff_timetable SET
-				staff_id = '{$staff_id}'";
+				staff_id = '{$staff_id}',
+				mon_start   = 800,
+				mon_end     = 2000,
+				tue_start   = 800,
+				tue_end     = 2000,
+				wed_start   = 800,
+				wed_end     = 2000,
+				thu_start   = 800,
+				thu_end     = 2000,
+				fri_start   = 800,
+				fri_end     = 2000,
+				sat_start   = 800,
+				sat_end     = 2000,
+				sun_start   = 800,
+				sun_end     = 2000";
 		$result4 = $mysqli->query($sql);
 
+		// loop through the business types and insert them
 		$result5 = array();
 
 		foreach ($_POST['business_types'] as $k => $v) {

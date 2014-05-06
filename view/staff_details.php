@@ -36,8 +36,11 @@ elseif (!isset($_POST['admin']) && !isset($row['admin'])) {
 <div id="staff-details">
 	<h1><?php echo $edit ? "Edit Staff" : "Add Staff"; ?></h1>
 
-
 	<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
+		<?php if ($edit) { ?>
+			<input type="hidden" name="staff_id" value="<?php echo $row['staff_id']; ?>">
+		<?php } ?>
+
 		<?php include "./view/staff_details_form.php"; ?>
 
 		<p><input type="submit" name="<?php echo $edit ? "edit_details" : "add_details"; ?>" value="Submit"></p>

@@ -6,12 +6,13 @@ if (isset($_POST['add_details']) || isset($_POST['edit_details'])) {
 	$errorMessage .= validate_form($_POST['last_name'], "req", "Last Name");
 	$errorMessage .= validate_form($_POST['last_name'], "name", "Last Name");
 	$errorMessage .= validate_form($_POST['email'], "req", "Email");
+	$errorMessage .= validate_form($_POST['email'], "email", "Email");
 
 	if (isset($_POST['add_details'])) {
 		$errorMessage .= validate_staff_email($_POST['email']);
 	}
 	else {
-		$errorMessage .= validate_staff_email($_POST['email'], $_SESSION['staff_id']);
+		$errorMessage .= validate_staff_email($_POST['email'], $_POST['staff_id']);
 	}
 
 	if (isset($_POST['add_details']) || !empty($_POST['password1']) || !empty($_POST['password2'])) {
