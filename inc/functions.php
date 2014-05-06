@@ -44,6 +44,12 @@ function validate_form($data, $type, $name)
 				}
 				break;
 
+			case "decimal":
+				if (!preg_match("/^([0-9.-]+)$/i", $data)) {
+					return $invalid;
+				}
+				break;
+
 			case "alpha_s":
 				if (!preg_match("/^([a-z\s]+)$/i", $data)) {
 					return $invalid;

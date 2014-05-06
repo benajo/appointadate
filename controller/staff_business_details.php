@@ -12,9 +12,9 @@ if (isset($_POST['update_business_details'])) {
 	$errorMessage .= validate_form($_POST['postcode'], "req", "Postcode");
 	$errorMessage .= validate_form($_POST['postcode'], "alnum_s", "Postcode");
 	$errorMessage .= validate_form($_POST['latitude'], "req", "Latitude");
-	$errorMessage .= validate_form($_POST['latitude'], "num", "Latitude");
+	$errorMessage .= validate_form($_POST['latitude'], "decimal", "Latitude");
 	$errorMessage .= validate_form($_POST['longitude'], "req", "Longitude");
-	$errorMessage .= validate_form($_POST['longitude'], "num", "Longitude");
+	$errorMessage .= validate_form($_POST['longitude'], "decimal", "Longitude");
 	$errorMessage .= validate_form($_POST['contact_name'], "req", "Contact Name");
 	$errorMessage .= validate_form($_POST['contact_name'], "name", "Contact Name");
 	$errorMessage .= validate_form($_POST['contact_phone'], "req", "Contact Phone");
