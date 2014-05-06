@@ -241,8 +241,8 @@ $timetable = new StaffTimetable;
 			<?php while ($row = $types->fetch_assoc()) { ?>
 				<tr>
 					<td><?php echo date("D, d M Y", strtotime($row['date'])); ?></td>
-					<td><?php echo substr_replace($row['start'], ":", -2, 0); ?></td>
-					<td><?php echo substr_replace($row['end'], ":", -2, 0); ?></td>
+					<td><?php echo substr_replace(str_pad($row['start'], 4, "0", STR_PAD_LEFT), ":", -2, 0); ?></td>
+					<td><?php echo substr_replace(str_pad($row['end'], 4, "0", STR_PAD_LEFT), ":", -2, 0); ?></td>
 					<td>
 						<a href="staff_timetable.php?remove_exception=<?php echo $row['date']; ?>" class="confirm-delete">remove</a>
 					</td>

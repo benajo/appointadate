@@ -127,7 +127,7 @@ elseif (isset($_POST['add_appointment_type']) || isset($_POST['edit_appointment_
 	$errorMessage .= validate_form($_POST['appointment_type_length'], "req", "Type Length");
 	$errorMessage .= validate_form($_POST['appointment_type_length'], "num", "Type Length");
 
-	$errorMessage .= (int)$_POST['appointment_type_length'] < 5 || (int)$_POST['appointment_type_length'] % 5 != 0 ? "Type Length must >= 5 and <= 240, and must be a multiple of 5.<br>" : "";
+	$errorMessage .= (int)$_POST['appointment_type_length'] < 5 || (int)$_POST['appointment_type_length'] > 240 || (int)$_POST['appointment_type_length'] % 5 != 0 ? "Type Length must be within the range 5-240, and must be a multiple of 5.<br>" : "";
 
 	if (empty($errorMessage)) {
 		$post = escape_post_data();
