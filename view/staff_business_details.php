@@ -252,6 +252,11 @@ $timetable = new BusinessTimetable;
 			</select>
 		</p>
 
+		<p>
+			<label for="exception_off">Off</label>
+			<input type="checkbox" name="exception_off" id="exception_off" value="1" <?php echo isset($_POST['exception_off']) && $_POST['exception_off'] == 1 ? "checked" : ""; ?>>
+		</p>
+
 		<p><input type="submit" name="add_timetable_exception" value="Create"></p>
 	</form>
 
@@ -270,13 +275,22 @@ $timetable = new BusinessTimetable;
 				<th>Date</th>
 				<th>Start</th>
 				<th>End</th>
+				<th>Off</th>
 				<th>Actions</th>
 			</tr>
 			<?php while ($row = $types->fetch_assoc()) { ?>
 				<tr>
 					<td><?php echo date("D, d M Y", strtotime($row['date'])); ?></td>
-					<td><?php echo substr_replace(str_pad($row['start'], 4, "0", STR_PAD_LEFT), ":", -2, 0); ?></td>
-					<td><?php echo substr_replace(str_pad($row['end'], 4, "0", STR_PAD_LEFT), ":", -2, 0); ?></td>
+
+					<?php if ($row['off'] == 0) { ?>
+						<td><?php echo substr_replace(str_pad($row['start'], 4, "0", STR_PAD_LEFT), ":", -2, 0); ?></td>
+						<td><?php echo substr_replace(str_pad($row['end'], 4, "0", STR_PAD_LEFT), ":", -2, 0); ?></td>
+					<?php } else { ?>
+						<td>-</td>
+						<td>-</td>
+					<?php } ?>
+
+					<td><?php echo $row['off'] == 1 ? "Yes" : "No"; ?></td>
 					<td>
 						<a href="staff_business_details.php?remove_exception=<?php echo $row['date']; ?>" class="confirm-delete">remove</a>
 					</td>

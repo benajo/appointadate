@@ -60,8 +60,10 @@ elseif (isset($_POST['add_timetable_exception'])) {
 
 	$errorMessage  = validate_form($_POST['exception_date'], "req", "Exception Date");
 
-	$errorMessage .= $_POST["exception_start_hour"] < 0 || $_POST["exception_start_minute"] < 0 ? "Exception Start is required.<br>" : "";
-	$errorMessage .= $_POST["exception_end_hour"] < 0   || $_POST["exception_end_minute"] < 0   ? "Exception End is required.<br>" : "";
+	if (!isset($_POST['exception_off'])) {
+		$errorMessage .= $_POST["exception_start_hour"] < 0 || $_POST["exception_start_minute"] < 0 ? "Exception Start is required.<br>" : "";
+		$errorMessage .= $_POST["exception_end_hour"] < 0   || $_POST["exception_end_minute"] < 0   ? "Exception End is required.<br>" : "";
+	}
 
 	if (empty($errorMessage)) {
 
@@ -77,14 +79,24 @@ elseif (isset($_POST['add_timetable_exception'])) {
 
 		if ($num == 0) {
 
-			$start = (int)$post["exception_start_hour"] . ($post["exception_start_minute"] < 10 ? "0" : "") . $post["exception_start_minute"];
-			$end   = (int)$post["exception_end_hour"] . ($post["exception_end_minute"] < 10 ? "0" : "") . $post["exception_end_minute"];
+			if (!isset($_POST['exception_off'])) {
+				$start = (int)$post["exception_start_hour"] . ($post["exception_start_minute"] < 10 ? "0" : "") . $post["exception_start_minute"];
+				$end   = (int)$post["exception_end_hour"] . ($post["exception_end_minute"] < 10 ? "0" : "") . $post["exception_end_minute"];
+
+				$off = 0;
+			}
+			else {
+				$start = $end = 0;
+
+				$off = 1;
+			}
 
 			$sql = "INSERT INTO staff_exception SET
 					staff_id = '{$_SESSION['staff_id']}',
 					`date`   = '{$date}',
 					start    = '{$start}',
-					end      = '{$end}'";
+					end      = '{$end}',
+					off      = '{$off}'";
 			$result = $mysqli->query($sql);
 
 			if ($result) {
