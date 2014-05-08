@@ -7,6 +7,9 @@ if (!$join) {
 	$result = $mysqli->query($sql);
 	$row = $result->fetch_assoc();
 }
+else {
+	unset($row);
+}
 ?>
 <div id="customer-details">
 	<h1><?php echo $join ? "Customer Join" : "Edit Details"; ?></h1>

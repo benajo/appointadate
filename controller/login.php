@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST['login'])) {
 	$errorMessage  = validate_form($_POST['loginEmail'], "req", "Email");
 	$errorMessage .= validate_form($_POST['loginEmail'], "email", "Email");

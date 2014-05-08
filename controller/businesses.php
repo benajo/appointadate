@@ -1,4 +1,9 @@
 <?php
+// display an error message if the user only fills in one of these fields without the other
+if ( (!empty($_GET['postcode']) && empty($_GET['range'])) || (!empty($_GET['range']) && empty($_GET['postcode'])) ) {
+	$errorMessage = "The postcode and within fields must be used simultaneously.";
+}
+
 // only allow these changes when a customer is logged in
 if (isset($_SESSION['customer_logged_in'])) {
 	// add favourite business to database

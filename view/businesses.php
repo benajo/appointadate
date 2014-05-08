@@ -118,8 +118,9 @@
 
 					<?php pagination($limit, $from, $page, $total, "businesses.php", "noticepage", "	noticeboard", array("business")); ?>
 
+				<?php } else { ?>
+					<p>There are no notices yet.</p>
 				<?php } ?>
-
 			</div>
 		</div>
 
@@ -158,6 +159,8 @@
 
 					<?php pagination($limit, $from, $page, $total, "businesses.php", "reviewpage", "reviews", array("business")); ?>
 
+				<?php } else { ?>
+					<p>There are no reviews yet.</p>
 				<?php } ?>
 			</div>
 		</div>

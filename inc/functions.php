@@ -232,12 +232,12 @@ function search_businesses($from, $limit)
 {
 	global $mysqli;
 
-	$name     = isset($_GET['keywords'])     && !empty($_GET['keywords'])     ? $_GET['keywords']     : "";
-	$type     = isset($_GET['businessType']) && !empty($_GET['businessType']) ? $_GET['businessType'] : "";
-	$location = isset($_GET['postcode'])     && !empty($_GET['postcode'])     ? $_GET['postcode']     : "";
-	$range    = isset($_GET['range'])        && !empty($_GET['range'])        ? $_GET['range']        : "";
+	$keywords = isset($_GET['keywords'])     && !empty($_GET['keywords'])     ? $mysqli->real_escape_string($_GET['keywords'])     : "";
+	$type     = isset($_GET['businessType']) && !empty($_GET['businessType']) ? $mysqli->real_escape_string($_GET['businessType']) : "";
+	$location = isset($_GET['postcode'])     && !empty($_GET['postcode'])     ? $mysqli->real_escape_string($_GET['postcode'])     : "";
+	$range    = isset($_GET['range'])        && !empty($_GET['range'])        ? $mysqli->real_escape_string($_GET['range'])        : "";
 
-	if (empty($name) && empty($type) && empty($location) && empty($range)) {
+	if (empty($keywords) && empty($type) && empty($location) && empty($range)) {
 		$sql = "SELECT * FROM business
 				ORDER BY name";
 		$result = $mysqli->query($sql);
@@ -291,9 +291,9 @@ function search_businesses($from, $limit)
 		$and = true;
 	}
 
-	if (!empty($name))
+	if (!empty($keywords))
 	{
-		$keywords = explode(' ', trim($name));
+		$keywords = explode(' ', trim($keywords));
 
 		if (empty($location) || empty($range)) {
 			$order = " ORDER BY ";
@@ -336,6 +336,8 @@ function search_businesses($from, $limit)
 	$sql .= $where2;
 	$sql .= $having;
 	$sql .= $order;
+
+	// echo $sql;
 
 	// get total number of results
 	$result = $mysqli->query($sql);
