@@ -10,8 +10,7 @@
 
 	<link type="text/css" rel="stylesheet" href="./style/normalize.css">
 	<link type="text/css" rel="stylesheet" href="./style/jquery-ui.min.css">
-	<link type="text/css" rel="stylesheet" href="./style/default.css">
-	<link type="text/css" rel="stylesheet" href="./style/front.css">
+	<link type="text/css" rel="stylesheet" href="./style/style.css">
 
 	<link href="./images/favicon.ico" rel="icon" type="image/x-icon">
 </head>
@@ -96,8 +95,12 @@
 
 				<li><a href="about.php">About</a></li>
 				<li><a href="businesses.php">Businesses</a></li>
-				<li><a href="join_customer.php">Customer Join</a></li>
-				<li><a href="join_business.php">Business Join</a></li>
+
+				<?php if (!($_SESSION['customer_logged_in'] || $_SESSION['staff_logged_in'])) { ?>
+					<li><a href="join_customer.php">Customer Join</a></li>
+					<li><a href="join_business.php">Business Join</a></li>
+				<?php } ?>
+
 				<li><a href="contact.php">Contact</a></li>
 				<li class="search">
 					<form action="businesses.php" method="post">

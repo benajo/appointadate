@@ -354,7 +354,7 @@ function search_businesses($from, $limit)
 * @author Ben Jovanic
 * @version 2014-03-03
 */
-function favourite_business($businessId)
+function favourite_business($business_id)
 {
 	global $mysqli;
 
@@ -363,16 +363,16 @@ function favourite_business($businessId)
 	if (isset($_SESSION['customer_logged_in'])) {
 		$sql = "SELECT * FROM customer_pref_business
 				WHERE customer_id = '{$_SESSION['customer_id']}'
-				AND   business_id = '{$businessId}'";
+				AND   business_id = '{$business_id}'";
 		$result = $mysqli->query($sql);
 
 		// if entry exists, they have already favourited the business, so allow them to remove the business
 		if ($result->num_rows) {
-			$html .= "<div class=\"favourite\"><a href=\"businesses.php?remove_favourite_business={$businessId}\">Remove from favourites</a></div>";
+			$html .= "<div class=\"favourite\"> - <a href=\"businesses.php?remove_favourite_business={$business_id}\">Remove from favourites</a></div>";
 		}
 		// otherwise, allow them to add the business as a favourite
 		else {
-			$html .= "<div class=\"favourite\"><a href=\"businesses.php?add_favourite_business={$businessId}\">Add to favourites</a></div>";
+			$html .= "<div class=\"favourite\"> - <a href=\"businesses.php?add_favourite_business={$business_id}\">Add to favourites</a></div>";
 		}
 	}
 
@@ -409,6 +409,23 @@ function business_types_html($business_id)
 		</p>
 		<?php
 	}
+}
+
+/**
+ * @author Ben Jovanic
+ * @version 2014-05-12
+ */
+function create_appointment_html($business_id)
+{
+	global $mysqli;
+
+	$html = "";
+
+	if (isset($_SESSION['customer_logged_in'])) {
+		$html .= "<div class=\"create-appointment\"> - <a href=\"customer_create_appointment.php?business={$business_id}\">Create new apppointment</a></div>";
+	}
+
+	return $html;
 }
 
 

@@ -13,6 +13,7 @@
 			<h1 class="title"><?php echo $business['name']; ?></h1>
 
 			<?php echo favourite_business($business['business_id']); ?>
+			<?php echo create_appointment_html($business['business_id']); ?>
 
 			<div>
 				<?php
@@ -241,6 +242,7 @@
 					<h2 class="title"><a href="businesses.php?business=<?php echo $business['business_id']; ?>"><?php echo $business['name']; ?></a></h2>
 
 					<?php echo favourite_business($business['business_id']); ?>
+					<?php echo create_appointment_html($business['business_id']); ?>
 
 					<?php if (isset($business['distance'])) { ?>
 						<p>Distance: <?php echo round($business['distance'], 2); ?> miles</p>

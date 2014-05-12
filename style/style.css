@@ -1,6 +1,74 @@
 /* body */
 body {
 	background: #eee;
+	font-family: Arial;
+	font-size: 16px;
+	line-height: 1.4em;
+}
+
+/* clear */
+.clear-both {
+	clear: both;
+}
+.clear-left {
+	clear: left;
+}
+.clear-right {
+	clear: right;
+}
+
+/* anchors */
+a, a:visited {
+	text-decoration: none;
+	color: #61929E;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+/* tables */
+table {
+	width: 100%;
+}
+table th {
+	text-align: left;
+}
+
+/* forms */
+input, textarea, select {
+	margin: 0;
+	padding: 2px;
+	border: 1px solid #666;
+	border-radius: 3px;
+}
+
+input.full-width {
+	width: 994px;
+}
+textarea.full-width {
+	width: 994px;
+	height: 250px;
+}
+
+fieldset legend {
+	font-size: 1.2em;
+}
+
+label,
+span.label {
+	width: 150px;
+	display: block;
+	float: left;
+	line-height: 25px;
+}
+
+label.inline {
+	display: inline;
+	float: none;
+}
+
+input[type=submit] {
+	width: auto !important;
 }
 
 /* page-container */
@@ -175,7 +243,8 @@ div#front-contact textarea {
 /* front-businesses */
 div#front-businesses h1.title,
 div#front-businesses h2.title,
-div#front-businesses div.favourite {
+div#front-businesses div.favourite,
+div#front-businesses div.create-appointment {
 	margin-bottom: 0;
 	display: inline-block;
 }

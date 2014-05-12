@@ -9,7 +9,7 @@
 			<input type="hidden" name="staff" value="<?php echo $_GET['staff']; ?>">
 			<input type="hidden" name="type" value="<?php echo $_GET['type']; ?>">
 
-			<?php $availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff'], $_SESSION['staff_business_id']); ?>
+			<?php $availableTimes = findAvailableTimes($_GET['date'], $_GET['type'], $_GET['staff']); ?>
 
 			<?php if ($availableTimes == 'off') { ?>
 				<p>There are no appointments available for the current selection.</p>
