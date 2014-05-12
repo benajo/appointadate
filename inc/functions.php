@@ -21,7 +21,7 @@ function validate_form($data, $type, $name)
 				break;
 
 			case "name":
-				if (!preg_match("/^([a-z\'\-]+)$/i", $data)) {
+				if (!preg_match("/^([a-z\'\-\s]+)$/i", $data)) {
 					return $invalid;
 				}
 				break;

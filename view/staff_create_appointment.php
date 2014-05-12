@@ -35,7 +35,10 @@
 								<?php foreach ($minutes as $minute => $value) { ?>
 									<td class = "td-highlight radio">
 										<?php if ($value == 1){ ?>
-											<input name = "time" type="radio" value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>">
+											<label for="time_<?php echo $hour; ?>_<?php echo $minute; ?>">
+												<input name = "time" type="radio" id="time_<?php echo $hour; ?>_<?php echo $minute; ?>"
+												value ="<?php echo substr($hour, 0, ($hour < 1000 ? 1 : 2)).":".$minute ?>">
+											</label>
 										<?php } else { ?>
 											&nbsp;
 										<?php } ?>

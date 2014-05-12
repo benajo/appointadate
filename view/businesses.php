@@ -230,7 +230,7 @@
  		</form>
 
 		<?php
-		$limit = 2;
+		$limit = 5;
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$from = ($page-1) * $limit;
 

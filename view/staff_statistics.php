@@ -112,9 +112,6 @@ elseif (isset($_POST['app_period'])) {
 
 		<?php if (count($by_staff) > 0) { ?>
 
-			<?php //echo "<PRE>";print_r($staff_list);echo "</PRE>"; ?>
-			<?php //echo "<PRE>";print_r($by_staff);echo "</PRE>"; ?>
-
 			<script type="text/javascript">
 				google.load("visualization", "1", { packages:["corechart"] });
 

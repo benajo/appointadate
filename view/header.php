@@ -103,7 +103,7 @@
 
 				<li><a href="contact.php">Contact</a></li>
 				<li class="search">
-					<form action="businesses.php" method="post">
+					<form action="businesses.php" method="get">
 						<input type="text" name="keywords" value="">
 						<input type="image" src="images/search-icon.png" alt="Search">
 					</form>

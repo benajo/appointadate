@@ -71,6 +71,11 @@ input[type=submit] {
 	width: auto !important;
 }
 
+input[type=radio],
+input[type=checkbox] {
+	border: none !important;
+}
+
 /* page-container */
 div#page-container{
 	background: #FFF;
@@ -294,12 +299,14 @@ div#staff-business-timetable td {
 	width: 70px;
 	height: 30px;
 }
-.td-highlight.radio input[type=radio] {
+.td-highlight.radio label {
 	width: 70px;
 	height: 30px;
 	display: block;
+	line-height: 30px;
 }
-.td-highlight.radio input[type=radio]:hover {
+.td-highlight.radio label:hover,
+.td-highlight.radio label:hover input {
 	cursor: pointer;
 }
 .td-highlight.radio:hover {
