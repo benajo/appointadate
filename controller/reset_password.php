@@ -60,11 +60,13 @@ if (isset($_POST['reset_password_step1'])) {
 			$mail->isSMTP();
 			// $mail->SMTPDebug  = 2;
 			$mail->SMTPAuth   = true;
-			$mail->SMTPSecure = 'ssl';
-			$mail->Host       = 'smtp.gmail.com';
-			$mail->Port       = 465;
-			$mail->Username   = 'appointadate@gmail.com';
-			$mail->Password   = '1tWoxsdN5V1U1OT8qcwIxqtE';
+			$mail->SMTPSecure = 'tsl';
+			$mail->Host       = 'mail.jovanic.co.uk';
+			$mail->Port       = 587;
+			// $mail->Username   = 'appointadate@gmail.com';
+			// $mail->Password   = '1tWoxsdN5V1U1OT8qcwIxqtE';
+			$mail->Username   = 'ben@jovanic.co.uk';
+			$mail->Password   = '1$VN!hv5KN90Ww^I';
 
 			$mail->setFrom('reset@appointadate.com', 'Appoint-A-Date Password Reset');
 			$mail->addReplyTo('noreply@appointadate.com');
