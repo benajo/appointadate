@@ -69,7 +69,7 @@
 			<?php } ?>
 		</table>
 
-		<?php pagination($limit, $from, $page, $total, "staff_appointments.php"); ?>
+		<?php pagination($limit, $page, $total, "staff_appointments.php"); ?>
 
 	<?php } else { ?>
 		<p>You have no appointments.</p>

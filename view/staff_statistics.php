@@ -1,27 +1,11 @@
 <?php
-$freq_times = array();
 $by_staff   = array();
 $app_period = array();
 
 $from = isset($_POST['from']) ? strtotime($_POST['from']) : 0;
 $to   = isset($_POST['to']) ? strtotime($_POST['to']) : 0;
 
-if (isset($_POST['freq_times'])) {
-	$sql = "SELECT COUNT(*), CONCAT(s.first_name, ' ', s.last_name), DATE(a.datetime) FROM appointment a
-			JOIN staff s ON a.staff_id = s.staff_id
-			WHERE a.business_id = '{$_SESSION['staff_business_id']}'
-			AND (a.datetime BETWEEN '".(date("Y-m-d", $from))." 0:0:0' AND '".(date("Y-m-d", $to))." 23:59:59')
-			GROUP BY DATE(a.datetime), a.staff_id
-			ORDER BY a.datetime";
-	$result = $mysqli->query($sql);
-
-	if ($result && $result->num_rows > 0) {
-		while ($row = $result->fetch_row()) {
-			$freq_times[$row[2]][$row[1]] = $row[0];
-		}
-	}
-}
-elseif (isset($_POST['by_staff'])) {
+if (isset($_POST['by_staff'])) {
 
 	$staff_list = array();
 
@@ -65,34 +49,11 @@ elseif (isset($_POST['app_period'])) {
 		}
 	}
 }
-
-
 ?>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <div id="staff-statistics">
 	<h1>Statistics</h1>
-
-	<?php /* ?>
-	<div>
-		<h2>Most frequently booked times</h2>
-		<p><em>Most frequently booked times and day for appointments</em></p>
-
-		<form action="staff_statistics.php" method="post">
-			<p>
-				<label for="freq_times_from" class="inline">From</label>
-				<input type="text" name="from" id="freq_times_from" class="datepicker" value="<?php echo isset($_POST['from']) ? $_POST['from'] : ""; ?>">
-
-				<label for="freq_times_to" class="inline">To</label>
-				<input type="text" name="to" id="freq_times_to" class="datepicker" value="<?php echo isset($_POST['to']) ? $_POST['to'] : ""; ?>">
-
-				<input type="submit" name="freq_times" value="Go">
-			</p>
-		</form>
-
-		<?php //echo "<PRE>";print_r($freq_times);echo "</PRE>"; ?>
-	</div>
-	<?php */ ?>
 
 	<div>
 		<h2>Appointments by staff</h2>
@@ -171,8 +132,6 @@ elseif (isset($_POST['app_period'])) {
 
 		<?php if (count($app_period) > 0) { ?>
 
-			<?php //echo "<PRE>";print_r($app_period);echo "</PRE>"; ?>
-
 			<script type="text/javascript">
 				google.load("visualization", "1", { packages:["corechart"] });
 
@@ -209,30 +168,3 @@ elseif (isset($_POST['app_period'])) {
 
 	</div>
 </div>
-
-<?php
-// $start = strtotime("2014-05-01 08:00:00");
-// $end   = strtotime("2014-05-31 00:00:00");
-
-// for ($i=$start; $i < $end; $i+=1800) {
-
-// 	if (date("H", $i) > 20) {
-// 		$i = strtotime("+12 hours", $i);
-// 		continue;
-
-// 	}
-
-// 	if (rand(0,2)) {
-// 		continue;
-// 	}
-
-// 	echo $sql = "
-// 	INSERT INTO `web14-appoint`.`appointment` VALUES (NULL , '1', '".rand(1,9)."', '".rand(1,7)."', '1', '".date("Y-m-d H:i:s", $i)."', '1', '0', NOW( ) , NOW( ));
-
-// 	";
-
-// 	$mysqli->query($sql);
-
-// 	echo "<BR>";
-// }
-?>

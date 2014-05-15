@@ -47,7 +47,7 @@
 	?>
 	<?php if ($result->num_rows) { ?>
 
-		<?php pagination($limit, $from, $page, $total, "customer_favourite_businesses.php", "page", "notices"); ?>
+		<?php pagination($limit, $page, $total, "customer_favourite_businesses.php", "page", "notices"); ?>
 
 		<?php while ($row = $result->fetch_assoc()) { ?>
 			<h2><?php echo $row['title']; ?> (<?php echo $row['name']; ?>)</h2>
@@ -57,7 +57,7 @@
 			<p><?php echo str_replace("\n", "<br>", $row['content']); ?></p>
 		<?php } ?>
 
-		<?php pagination($limit, $from, $page, $total, "customer_favourite_businesses.php", "page", "notices"); ?>
+		<?php pagination($limit, $page, $total, "customer_favourite_businesses.php", "page", "notices"); ?>
 
 	<?php } else { ?>
 		<p>There are no notices.</p>

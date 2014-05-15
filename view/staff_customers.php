@@ -60,7 +60,7 @@ if (isset($_GET['keywords'])) {
 			<?php } ?>
 		</table>
 
-		<?php pagination($limit, $from, $page, $total, "staff_customers.php", "page", "", array("keywords")); ?>
+		<?php pagination($limit, $page, $total, "staff_customers.php", "page", "", array("keywords")); ?>
 
 	<?php } else { ?>
 		<p>You have no appointments.</p>

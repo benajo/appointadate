@@ -72,7 +72,7 @@
 			<?php } ?>
 		</table>
 
-		<?php pagination($limit, $from, $page, $total, "customer_appointments.php"); ?>
+		<?php pagination($limit, $page, $total, "customer_appointments.php"); ?>
 
 	<?php } else { ?>
 		<p>You have no appointments.</p>

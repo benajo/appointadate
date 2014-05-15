@@ -107,7 +107,7 @@
 
 				<?php if ($result && $result->num_rows > 0) { ?>
 
-					<?php pagination($limit, $from, $page, $total, "businesses.php", "noticepage", "noticeboard", array("business")); ?>
+					<?php pagination($limit, $page, $total, "businesses.php", "noticepage", "noticeboard", array("business")); ?>
 
 					<?php while ($notice = $result->fetch_assoc()) { ?>
 						<div class="notice">
@@ -117,7 +117,7 @@
 						</div>
 					<?php } ?>
 
-					<?php pagination($limit, $from, $page, $total, "businesses.php", "noticepage", "	noticeboard", array("business")); ?>
+					<?php pagination($limit, $page, $total, "businesses.php", "noticepage", "	noticeboard", array("business")); ?>
 
 				<?php } else { ?>
 					<p>There are no notices yet.</p>
@@ -148,7 +148,7 @@
 				$result = $mysqli->query($sql);
 				?>
 				<?php if ($result && $result->num_rows > 0) { ?>
-					<?php pagination($limit, $from, $page, $total, "businesses.php", "reviewpage", "reviews", array("business")); ?>
+					<?php pagination($limit, $page, $total, "businesses.php", "reviewpage", "reviews", array("business")); ?>
 
 					<?php while ($review = $result->fetch_assoc()) { ?>
 						<div class="review">
@@ -158,7 +158,7 @@
 						</div>
 					<?php } ?>
 
-					<?php pagination($limit, $from, $page, $total, "businesses.php", "reviewpage", "reviews", array("business")); ?>
+					<?php pagination($limit, $page, $total, "businesses.php", "reviewpage", "reviews", array("business")); ?>
 
 				<?php } else { ?>
 					<p>There are no reviews yet.</p>
@@ -256,7 +256,7 @@
 				</div>
 			<?php } ?>
 
-			<?php pagination($limit, $from, $page, $total, "businesses.php", "page", "", array("keywords", "postcode", "businessType", "range")); ?>
+			<?php pagination($limit, $page, $total, "businesses.php", "page", "", array("keywords", "postcode", "businessType", "range")); ?>
 		<?php } else { ?>
 			<p>There are no businesses yet.</p>
 		<?php } ?>

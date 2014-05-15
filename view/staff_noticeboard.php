@@ -71,7 +71,7 @@ else {
 			<?php } ?>
 		</table>
 
-		<?php pagination($limit, $from, $page, $total, "staff_noticeboard.php", "page", "notices"); ?>
+		<?php pagination($limit, $page, $total, "staff_noticeboard.php", "page", "notices"); ?>
 
 	<?php } else { ?>
 		<p>There are no notices.</p>
